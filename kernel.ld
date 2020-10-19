@@ -1,0 +1,31 @@
+OUTPUT_FORMAT(binary)
+
+kernel_start     = 0x00010000 ;
+kernel_ram_start = 0x00000400 ;
+
+SECTIONS
+{
+	. = kernel_start ;
+
+    .text :
+    {
+        *(.text) ;
+		. = ALIGN(0x400) ;
+		_etext = . ;
+    }
+
+    .data kernel_ram_start : AT(ADDR(.text) + SIZEOF(.text))
+    {
+		_data = . ;
+        *(.data) ;
+		_edata = . ;
+    }
+
+    .bss ALIGN(0x2) :
+    {
+		_bss = . ;
+        *(COMMON) ;          /* all COMMON sections from all files */
+        *(.bss) ;            /* all bss sections from all files */
+		_bssend = . ;
+    }
+}
