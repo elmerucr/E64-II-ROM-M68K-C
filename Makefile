@@ -12,6 +12,7 @@ endif
 SOURCES_PREFIX = src
 
 OBJECTS =	boot.o \
+			kinit.o \
 			kmain.o
 CC = $(TOOLCHAIN_PREFIX)gcc
 # -fleading-underscore makes it linkable under linux (or something to do with elf????)
@@ -28,7 +29,7 @@ CCNATIVE = gcc
 
 all: kernel.bin
 
-kernel.bin: unpatched_kernel.bin mk_rom
+kernel.bin: unpatched_kernel.bin mk_kernel
 	./mk_kernel
 
 unpatched_kernel.bin: $(OBJECTS) kernel.ld
@@ -40,7 +41,7 @@ unpatched_kernel.bin: $(OBJECTS) kernel.ld
 %.o: %.s
 	$(CC) $(CFLAGS) $< -o $@
 
-mk_rom: mk_kernel.c
+mk_kernel: mk_kernel.c
 	$(CCNATIVE) -o mk_kernel mk_kernel.c
 
 clean:

@@ -1,4 +1,4 @@
-#include "kernel_defines.h"
+#include "kernel_definitions.h"
 
 const char letter[8] =
 {
