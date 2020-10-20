@@ -10,6 +10,7 @@ SECTIONS
     .text :
     {
         *(.text) ;
+        *(.rodata) ;
 		. = ALIGN(0x400) ;
 		_etext = . ;
     }
