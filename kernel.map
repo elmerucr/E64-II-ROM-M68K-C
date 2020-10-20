@@ -13,10 +13,11 @@ Linker script and memory map
 .text           0x0000000000010000      0x400
  *(.text)
  .text          0x0000000000010000        0x8 boot.o
- .text          0x0000000000010008       0x9c kmain.o
-                0x0000000000010008                _kmain
+ .text          0x0000000000010008       0xa4 kmain.o
+                0x0000000000010008                _letter
+                0x0000000000010010                _kmain
                 0x0000000000010400                . = ALIGN (0x400)
- *fill*         0x00000000000100a4      0x35c 
+ *fill*         0x00000000000100ac      0x354 
                 0x0000000000010400                _etext = .
 
 .data           0x0000000000000400        0x4 load address 0x0000000000010400
@@ -35,4 +36,4 @@ Linker script and memory map
                 0x0000000000000408                _bssend = .
 LOAD boot.o
 LOAD kmain.o
-OUTPUT(kernel.bin binary)
+OUTPUT(unpatched_kernel.bin binary)

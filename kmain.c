@@ -1,4 +1,16 @@
-#include "kernel_constants.h"
+#include "kernel_defines.h"
+
+const char letter[8] =
+{
+	0b10101010,
+	0b10101010,
+	0b10101010,
+	0b10101010,
+	0b10101010,
+	0b10101010,
+	0b10101010,
+	0b10101010
+};
 
 void kmain(void)
 {
