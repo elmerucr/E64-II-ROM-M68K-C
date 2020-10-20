@@ -16,8 +16,7 @@ Linker script and memory map
  .text          0x0000000000010008        0x8 kinit.o
                 0x0000000000010008                _kinit
  .text          0x0000000000010010       0xa4 kmain.o
-                0x0000000000010010                _letter
-                0x0000000000010018                _kmain
+                0x0000000000010010                _kmain
  *(.rodata)
                 0x0000000000010400                . = ALIGN (0x400)
  *fill*         0x00000000000100b4      0x34c 

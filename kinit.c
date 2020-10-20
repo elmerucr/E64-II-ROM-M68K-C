@@ -1,5 +1,4 @@
-#include "kernel_definitions.h"
-#include "kmain.h"
+#include "kernel.h"
 
 void kinit(void)
 {

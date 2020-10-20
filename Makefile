@@ -16,12 +16,13 @@ OBJECTS =	boot.o \
 			kmain.o
 CC = $(TOOLCHAIN_PREFIX)gcc
 # -fleading-underscore makes it linkable under linux (or something to do with elf????)
+# -O0 and -O1 seem to work, -O2 and -O3 cause problems
 CFLAGS =	-fleading-underscore \
 			-nostdlib \
 			-mshort \
 			-m68000 \
 			-fomit-frame-pointer \
-			-Wall -Wextra -c
+			-Wall -Wextra -c -O0
 LD = $(TOOLCHAIN_PREFIX)ld
 LDFLAGS = -T kernel.ld -Map=kernel.map
 
@@ -38,7 +39,7 @@ unpatched_kernel.bin: $(OBJECTS) kernel.ld
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.s
+%.o: %.S
 	$(CC) $(CFLAGS) $< -o $@
 
 mk_kernel: mk_kernel.c

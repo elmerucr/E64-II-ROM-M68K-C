@@ -10,6 +10,14 @@ int main(int argc, char *argv[]) {
 
 	fseek(f, 0L, SEEK_END);
 	long pos = ftell(f);
+
+	printf("[mk_kernel] unpatched kernel size: %lu\n", pos);
+	if( pos >= 65536L )
+	{
+		printf("[mk_kernel] too large, exiting...\n");
+		return 1;
+	}
+
 	rewind(f);
 
 	fread(romdata, pos, 1, f);
