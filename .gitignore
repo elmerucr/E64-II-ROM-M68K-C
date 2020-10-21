@@ -1,6 +1,6 @@
 build_script
 *.bin
 *.o
-kernel.cpp
-kernel.map
-mk_kernel
+rom.cpp
+rom.map
+mk_rom

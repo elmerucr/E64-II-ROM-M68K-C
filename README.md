@@ -1,6 +1,7 @@
-# E64-II-kernel
+# E64-II-rom
 ## Introduction
 ## Building
 Make sure you have 
 ## Links
-* [google](https://www.google.nl)
+* [E64-II](https://github.com/elmerucr/E64-II)
+* [EmuTOS]()

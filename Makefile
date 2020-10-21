@@ -1,4 +1,4 @@
-# change to 1 if using m68k-elf-gcc
+# change to 1 for m68k-elf-gcc
 ELF = 0
 
 ifeq (1,$(ELF))
@@ -9,13 +9,14 @@ else
 TOOLCHAIN_PREFIX = m68k-atari-mint-
 endif
 
-SOURCES_PREFIX = src
-
+# boot.o should be the first on the list (linker script / entry point)
 OBJECTS =	boot.o \
 			kernel.o \
 			kinit.o \
 			kmain.o
+
 CC = $(TOOLCHAIN_PREFIX)gcc
+
 # -fleading-underscore makes it linkable under linux (or something to do with elf????)
 # -O0 and -O1 seem to work, -O2 and -O3 cause problems
 CFLAGS =	-fleading-underscore \
@@ -23,19 +24,19 @@ CFLAGS =	-fleading-underscore \
 			-mshort \
 			-m68000 \
 			-fomit-frame-pointer \
-			-Wall -Wextra -c -O3
+			-Wall -Wextra -c -O1
 LD = $(TOOLCHAIN_PREFIX)ld
-LDFLAGS = -T kernel.ld -Map=kernel.map
+LDFLAGS = -T rom.ld -Map=rom.map
 
 CCNATIVE = gcc
 
-all: kernel.bin
+all: rom.bin
 
-kernel.bin: unpatched_kernel.bin mk_kernel
-	./mk_kernel
+rom.bin: unpatched_rom.bin mk_rom
+	./mk_rom
 
-unpatched_kernel.bin: $(OBJECTS) kernel.ld
-	$(LD) $(LDFLAGS) $(OBJECTS) -o unpatched_kernel.bin
+unpatched_rom.bin: $(OBJECTS) rom.ld
+	$(LD) $(LDFLAGS) $(OBJECTS) -o unpatched_rom.bin
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
@@ -43,8 +44,8 @@ unpatched_kernel.bin: $(OBJECTS) kernel.ld
 %.o: %.s
 	$(CC) $(CFLAGS) $< -o $@
 
-mk_kernel: mk_kernel.c
-	$(CCNATIVE) -o mk_kernel mk_kernel.c
+mk_rom: mk_rom.c
+	$(CCNATIVE) -o mk_rom mk_rom.c
 
 clean:
-	rm kernel.cpp kernel.bin unpatched_kernel.bin kernel.map mk_kernel $(OBJECTS)
+	rm rom.cpp rom.bin unpatched_rom.bin rom.map mk_rom $(OBJECTS)

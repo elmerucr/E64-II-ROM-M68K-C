@@ -6,15 +6,15 @@ int main(int argc, char *argv[]) {
 
 	// read
 	FILE *f;
-	f = fopen("unpatched_kernel.bin", "r");
+	f = fopen("unpatched_rom.bin", "r");
 
 	fseek(f, 0L, SEEK_END);
 	long pos = ftell(f);
 
-	printf("[mk_kernel] unpatched kernel size: %lu\n", pos);
+	printf("[mk_rom] unpatched rom size: %lu\n", pos);
 	if( pos >= 65536L )
 	{
-		printf("[mk_kernel] too large, exiting...\n");
+		printf("[mk_rom] too large, exiting...\n");
 		return 1;
 	}
 
@@ -27,12 +27,12 @@ int main(int argc, char *argv[]) {
 	fclose(f);
 
 	// write 64k output to cpp file
-	f = fopen("kernel.cpp","w");
+	f = fopen("rom.cpp","w");
 
-	fprintf(f, "// kernel.cpp elmerucr (c)2020\n");
+	fprintf(f, "// rom.cpp elmerucr (c)2020\n");
 	fprintf(f, "//\n\n");
 	fprintf(f, "#include <cstdint>\n\n");
-	fprintf(f, "uint8_t kernel[65536] =\n{");
+	fprintf(f, "uint8_t rom[65536] =\n{");
 
 	for(int i = 0; i<(65535); i++) {
 		if(i%16 == 0) fprintf(f, "\n\t");
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 	fclose(f);
 
 	// write 64k output to bin file
-	f = fopen("kernel.bin","wb");
+	f = fopen("rom.bin","wb");
 	fwrite(romdata, sizeof(romdata), 1, f);
 	fclose(f);
 

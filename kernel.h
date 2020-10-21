@@ -6,8 +6,15 @@
 
 void kinit(void);
 void kmain(void);
-unsigned char kpeekb(unsigned char *address);
+
+/*  poke & peek functionality
+ *
+ */
 void kpokeb(unsigned char *address, unsigned char byte);
-void kpokew(unsigned int *address, unsigned int word);
+void kpokew(unsigned int  *address, unsigned int  word);
+void kpokel(unsigned long *address, unsigned long lwrd);
+unsigned char kpeekb(unsigned char *address);
+unsigned char kpeekw(unsigned int  *address);
+unsigned char kpeekl(unsigned long *address);
 
 #endif
