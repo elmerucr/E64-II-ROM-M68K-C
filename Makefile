@@ -40,7 +40,7 @@ unpatched_kernel.bin: $(OBJECTS) kernel.ld
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.S
+%.o: %.s
 	$(CC) $(CFLAGS) $< -o $@
 
 mk_kernel: mk_kernel.c
