@@ -6,5 +6,8 @@
 
 void kinit(void);
 void kmain(void);
+unsigned char kpeekb(unsigned char *address);
+void kpokeb(unsigned char *address, unsigned char byte);
+void kpokew(unsigned int *address, unsigned int word);
 
 #endif

@@ -12,6 +12,7 @@ endif
 SOURCES_PREFIX = src
 
 OBJECTS =	boot.o \
+			kernel.o \
 			kinit.o \
 			kmain.o
 CC = $(TOOLCHAIN_PREFIX)gcc
@@ -22,7 +23,7 @@ CFLAGS =	-fleading-underscore \
 			-mshort \
 			-m68000 \
 			-fomit-frame-pointer \
-			-Wall -Wextra -c -O0
+			-Wall -Wextra -c -O3
 LD = $(TOOLCHAIN_PREFIX)ld
 LDFLAGS = -T kernel.ld -Map=kernel.map
 

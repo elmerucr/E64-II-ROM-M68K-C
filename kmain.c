@@ -16,18 +16,18 @@ void kmain(void)
 	static unsigned char getal = 55;
 	getal += 13;
 
-	unsigned short *border_color = (unsigned short *)VICV_BORDER_COLOR;
 	unsigned char *border_size  = (unsigned char *)VICV_BORDER_SIZE;
 
 	*border_size = getal;
 
 	static unsigned int word_value = 0;
 
-elmer:
+	kpokew((unsigned int *)0x1,0xffff);
 
 	for(;;)
 	{
-		*border_color = word_value;
+		//*border_color = word_value;
+		kpokew(VICV_BORDER_COLOR, word_value);
 		word_value++;
 	}
 }
