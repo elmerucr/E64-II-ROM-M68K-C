@@ -3,3 +3,4 @@ build_script
 *.o
 kernel.cpp
 kernel.map
+mk_kernel
