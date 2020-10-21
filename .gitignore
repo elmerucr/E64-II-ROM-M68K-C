@@ -1,6 +1,7 @@
 build_script
-*.bin
 *.o
+rom.bin
 rom.cpp
 rom.map
+rom_unpatched.bin
 mk_rom

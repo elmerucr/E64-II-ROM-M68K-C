@@ -6,12 +6,12 @@ int main(int argc, char *argv[]) {
 
 	// read
 	FILE *f;
-	f = fopen("unpatched_rom.bin", "r");
+	f = fopen("rom_unpatched.bin", "r");
 
 	fseek(f, 0L, SEEK_END);
 	long pos = ftell(f);
 
-	printf("[mk_rom] unpatched rom size: %lu\n", pos);
+	printf("[mk_rom] rom_unpatched size: %lu\n", pos);
 	if( pos >= 65536L )
 	{
 		printf("[mk_rom] too large, exiting...\n");

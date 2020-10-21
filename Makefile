@@ -11,6 +11,7 @@ endif
 
 # boot.o should be the first on the list (linker script / entry point)
 OBJECTS =	boot.o \
+			fonts.o \
 			kernel.o \
 			kinit.o \
 			kmain.o
@@ -32,11 +33,11 @@ CCNATIVE = gcc
 
 all: rom.bin
 
-rom.bin: unpatched_rom.bin mk_rom
+rom.bin: rom_unpatched.bin mk_rom
 	./mk_rom
 
-unpatched_rom.bin: $(OBJECTS) rom.ld
-	$(LD) $(LDFLAGS) $(OBJECTS) -o unpatched_rom.bin
+rom_unpatched.bin: $(OBJECTS) rom.ld
+	$(LD) $(LDFLAGS) $(OBJECTS) -o rom_unpatched.bin
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
@@ -48,4 +49,4 @@ mk_rom: mk_rom.c
 	$(CCNATIVE) -o mk_rom mk_rom.c
 
 clean:
-	rm rom.cpp rom.bin unpatched_rom.bin rom.map mk_rom $(OBJECTS)
+	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom $(OBJECTS)
