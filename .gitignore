@@ -1,3 +1,5 @@
 build_script
-
+*.bin
 *.o
+kernel.cpp
+kernel.map
