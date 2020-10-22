@@ -11,7 +11,6 @@ endif
 
 # boot.o should be the first on the list (linker script / entry point)
 OBJECTS =	boot.o \
-			fonts.o \
 			kernel.o \
 			kinit.o \
 			kmain.o
