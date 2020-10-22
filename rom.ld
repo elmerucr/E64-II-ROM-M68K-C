@@ -1,6 +1,6 @@
 OUTPUT_FORMAT(binary)
 
-rom_start     = 0x00010000 ;
+rom_start     = 0x00fc0000 ;
 kernel_ram_start = 0x00000400 ;
 
 SECTIONS
@@ -11,7 +11,7 @@ SECTIONS
     {
         *(.text) ;
         *(.rodata) ;
-		. = ALIGN(0x400) ;
+		. = ALIGN(0x10) ;
 		_etext = . ;
     }
 

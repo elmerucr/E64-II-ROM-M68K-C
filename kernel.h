@@ -1,8 +1,8 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define	VICV_BORDER_COLOR	0x00ff0400
-#define VICV_BORDER_SIZE	0x00ff040C
+#define	VICV_BORDER_COLOR	0x00fa0400
+#define VICV_BORDER_SIZE	0x00fa040C
 
 extern unsigned char *cbm_cp437_font;
 
@@ -15,8 +15,8 @@ void kmain(void);
 void kpokeb(unsigned long address, unsigned char byte);
 void kpokew(unsigned long address, unsigned int  word);
 void kpokel(unsigned long address, unsigned long lwrd);
-unsigned char kpeekb(unsigned char *address);
-unsigned char kpeekw(unsigned int  *address);
-unsigned char kpeekl(unsigned long *address);
+unsigned char kpeekb(unsigned long address);
+unsigned int  kpeekw(unsigned long address);
+unsigned long kpeekl(unsigned long address);
 
 #endif

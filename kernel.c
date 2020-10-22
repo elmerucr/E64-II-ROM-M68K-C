@@ -1,8 +1,18 @@
 #include "kernel.h"
 
-unsigned char kpeekb(unsigned char *address)
+unsigned char kpeekb(unsigned long address)
 {
-    return *address;
+    return *(unsigned char *)address;
+}
+
+unsigned int kpeekw(unsigned long address)
+{
+    return *(unsigned int *)address;
+}
+
+unsigned long kpeekl(unsigned long address)
+{
+    return *(unsigned long *)address;
 }
 
 void kpokeb(unsigned long address, unsigned char byte)

@@ -22,7 +22,7 @@ void kmain(void)
 
 	static unsigned int word_value = 0;
 
-	kpokew(0x00000001, 0xffff);
+	kpokeb(53280, 14);
 
 	for(;;)
 	{
