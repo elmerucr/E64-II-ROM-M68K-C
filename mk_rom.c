@@ -1,7 +1,11 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <time.h>
 
 int main(int argc, char *argv[]) {
+	time_t t;
+	time(&t);
+
 	uint8_t romdata[65536];
 
 	// read
@@ -30,7 +34,8 @@ int main(int argc, char *argv[]) {
 	f = fopen("rom.cpp","w");
 
 	fprintf(f, "// rom.cpp elmerucr (c)2020\n");
-	fprintf(f, "//\n\n");
+	fprintf(f, "// built-in rom image for E64-II\n");
+	fprintf(f, "// %s\n",ctime(&t));
 	fprintf(f, "#include <cstdint>\n\n");
 	fprintf(f, "uint8_t rom[65536] =\n{");
 
