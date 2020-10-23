@@ -24,7 +24,9 @@ CFLAGS =	-fleading-underscore \
 			-mshort \
 			-m68000 \
 			-fomit-frame-pointer \
-			-Wall -Wextra -c -O1
+			-Wall -Wextra -c -O1 \
+			-lgcc \
+			-ffreestanding
 LD = $(TOOLCHAIN_PREFIX)ld
 LDFLAGS = -T rom.ld -Map=rom.map
 

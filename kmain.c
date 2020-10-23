@@ -1,5 +1,5 @@
 #include "kernel.h"
-
+#include <stdint.h>
 
 void kmain(void)
 {
@@ -16,18 +16,17 @@ void kmain(void)
 	static unsigned char getal = 55;
 	getal += 13;
 
-	unsigned char *border_size  = (unsigned char *)VICV_BORDER_SIZE;
+	uint8_t *border_size  = (uint8_t *)VICV_BORDER_SIZE;
 
 	*border_size = getal;
 
-	static unsigned int word_value = 0;
+	static uint16_t color = 0;
 
 	kpokeb(53280, 14);
 
 	for(;;)
 	{
-		//*border_color = word_value;
-		kpokew(VICV_BORDER_COLOR, word_value);
-		word_value++;
+		kpokew(VICV_BORDER_COLOR, color);
+		color++;
 	}
 }
