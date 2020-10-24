@@ -1,7 +1,7 @@
 #include "kernel.h"
 #include <stdint.h>
 
-void kmain(void)
+void kmain()
 {
 	// move relevant portion of initialized data to ram
 	extern char etext, data, edata, bss, bssend;
