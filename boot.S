@@ -15,3 +15,4 @@ boot:
     movel   #0xc00000,VECTOR_045    // put address in Trap 13 vector
     //trap    #13
     jmp     _init
+
