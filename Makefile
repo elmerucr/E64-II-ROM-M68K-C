@@ -12,7 +12,7 @@ endif
 # boot.o should be the first on the list (linker script / entry point)
 OBJECTS =	boot.o \
 			kernel.o \
-			kinit.o \
+			init.o \
 			kmain.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc

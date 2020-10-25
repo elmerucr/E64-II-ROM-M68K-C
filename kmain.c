@@ -22,11 +22,11 @@ void kmain()
 
 	static uint16_t color = 0;
 
-	kpokeb(53280, 14);
+	pokeb(53280, 14);
 
 	for(;;)
 	{
-		kpokew(VICV_BORDER_COLOR, color);
+		pokew(VICV_BORDER_COLOR, color);
 		color++;
 	}
 }
