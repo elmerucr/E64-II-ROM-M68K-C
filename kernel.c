@@ -1,31 +1,31 @@
 #include "kernel.h"
 
-unsigned char kpeekb(unsigned long address)
+uint8_t kpeekb(uint32_t address)
 {
-    return *(unsigned char *)address;
+    return *(uint8_t *)address;
 }
 
-unsigned int kpeekw(unsigned long address)
+uint16_t kpeekw(uint32_t address)
 {
-    return *(unsigned int *)address;
+    return *(uint16_t *)address;
 }
 
-unsigned long kpeekl(unsigned long address)
+uint32_t kpeekl(uint32_t address)
 {
-    return *(unsigned long *)address;
+    return *(uint32_t *)address;
 }
 
-void kpokeb(unsigned long address, unsigned char byte)
+void kpokeb(uint32_t address, uint8_t  byte)
 {
-    *(unsigned char *)address = byte;
+    *(uint8_t *)address = byte;
 }
 
-void kpokew(unsigned long address, unsigned int word)
+void kpokew(uint32_t address, uint16_t word)
 {
-    *(unsigned int *)address = word;
+    *(uint16_t *)address = word;
 }
 
-void kpokel(unsigned long address, unsigned long lwrd)
+void kpokel(uint32_t address, uint32_t lwrd)
 {
-    *(unsigned long *)address = lwrd;
+    *(uint32_t *)address = lwrd;
 }

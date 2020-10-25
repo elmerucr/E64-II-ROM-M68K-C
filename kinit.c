@@ -1,6 +1,6 @@
 #include "kernel.h"
 
-void kinit(void)
+void kinit()
 {
     kmain();
 }

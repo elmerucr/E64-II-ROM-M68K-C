@@ -1,4 +1,5 @@
 .DS_Store
+.vscode/
 build_script
 *.o
 rom.bin

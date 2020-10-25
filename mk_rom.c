@@ -15,22 +15,27 @@ int main(int argc, char *argv[]) {
 	fseek(f, 0L, SEEK_END);
 	long pos = ftell(f);
 
-	printf("[mk_rom] rom_unpatched size: %lu\n", pos);
+	printf("[mk_rom] rom_unpatched.bin size: %lu\n", pos);
 	if( pos >= 65536L )
 	{
 		printf("[mk_rom] too large, exiting...\n");
+		fclose(f);
 		return 1;
 	}
 
+	// go back to beginning of file
+	// read data
 	rewind(f);
-
 	fread(romdata, pos, 1, f);
 
+	// fill up the rest of the final rom with zeroes
 	for(int i=pos; i < 65536; i++) romdata[i] = 0x00;
 
+	// close original unpatched bin file
 	fclose(f);
 
 	// write 64k output to cpp file
+	printf("[mk_rom] writing 64k image 'rom.bin' and 'rom.cpp' source version\n");
 	f = fopen("rom.cpp","w");
 
 	fprintf(f, "// rom.cpp elmerucr (c)2020\n");

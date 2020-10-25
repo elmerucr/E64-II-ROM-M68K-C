@@ -43,7 +43,7 @@ rom_unpatched.bin: $(OBJECTS) rom.ld
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.s
+%.o: %.S
 	$(CC) $(CFLAGS) $< -o $@
 
 mk_rom: mk_rom.c
