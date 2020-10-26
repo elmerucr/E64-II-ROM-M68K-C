@@ -37,17 +37,15 @@ void pokel(uint32_t address, uint32_t lwrd)
 }
 
 
-uint8_t *memcpy(uint8_t *dest, const uint8_t *src, uint32_t count)
+uint8_t *memcpy(uint8_t *dest, const uint8_t *src, size_t count)
 {
-    uint32_t i;
-    for(i=0; i<count; i++) dest[i] = src[i];
+    for(uint32_t i=0; i<count; i++) dest[i] = src[i];
     return dest;
 }
 
 
-uint8_t *memset(uint8_t *dest, uint8_t val, uint32_t count)
+uint8_t *memset(uint8_t *dest, uint8_t val, size_t count)
 {
-    uint32_t i;
-    for(i=0; i<count; i++) dest[i] = val;
+    for(uint32_t i=0; i<count; i++) dest[i] = val;
     return dest;
 }

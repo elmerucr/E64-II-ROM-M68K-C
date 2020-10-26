@@ -1,13 +1,4 @@
-# change to 1 for m68k-elf-gcc
-ELF = 0
-
-ifeq (1,$(ELF))
-# Standard ELF toolchain
 TOOLCHAIN_PREFIX = m68k-elf-
-else
-# MiNT toolchain
-TOOLCHAIN_PREFIX = m68k-atari-mint-
-endif
 
 # boot.o should be the first on the list (linker script / entry point)
 OBJECTS =	boot.o \
