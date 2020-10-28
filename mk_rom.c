@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 	fseek(f, 0L, SEEK_END);
 	long pos = ftell(f);
 
-	printf("[mk_rom] rom_unpatched.bin size: %lu\n", pos);
+	printf("[mk_rom] rom_unpatched.bin size: %lu bytes\n", pos);
 	if( pos >= 65536L )
 	{
 		printf("[mk_rom] too large, exiting...\n");
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 	fclose(f);
 
 	// write 64k output to cpp file
-	printf("[mk_rom] writing 64k image 'rom.bin' and 'rom.cpp' source version\n");
+	printf("[mk_rom] writing 64k image 'rom.bin' and 'rom.cpp' for inclusion in E64-II\n");
 	f = fopen("rom.cpp","w");
 
 	fprintf(f, "// rom.cpp elmerucr (c)2020\n");

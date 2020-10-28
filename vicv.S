@@ -1,0 +1,10 @@
+#include "kernel_constants.h"
+
+    .globl  _vblank_exception_handler
+
+    .text
+_vblank_exception_handler:
+    moveb   #1,VICV_ISR         // acknowledge interrupt
+    moveb   #1,VICV_BUFFERSWAP  // swap front and backbuffers
+    moveb   #1,BLITTER_CONTROL	// clear the backbuffer
+    rte                         // return from exception (so don't use rts)

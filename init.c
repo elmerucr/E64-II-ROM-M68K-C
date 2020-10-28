@@ -1,4 +1,5 @@
 #include "kernel.h"
+#include "vicv.h"
 
 void init()
 {
@@ -11,8 +12,12 @@ void init()
 	// Zero .bss section
 	for (dst = &bss; dst< &bssend; dst++) *dst = 0xb0;
 
-	// do something with a vector value :-)
-	update_vector_table(255, pokeb);
+
+	pokew(BLITTER_CLEAR_COLOR, C64_BLUE);
+
+	update_vector_table(26, vblank_exception_handler);	// vector 26 (interrupt level 2) connected to vblank handler
+
+	set_interrupt_priority_mask(1);
 
     kmain();
 }

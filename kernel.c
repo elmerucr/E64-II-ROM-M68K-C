@@ -1,11 +1,31 @@
 #include "kernel.h"
+#include "vicv.h"
 
+struct surface_blit default_screen =
+{
+    0b00001000,     // flags 0 - tile mode, simple color, color per tile
+	0b00000000,     // flags 1 - no stretching, mirroring etc
+	0b01010110,     // height 2^%101 = 32 chars = 256 pixels, width 2^%110 = 64 chars  = 512 pixels
+	0b00000000,     // currently unused.... :-)
+	0,              // x
+	16,             // y
+	0xF0A0,         // foreground color
+	0xF222,         // background color
+    (uint16_t *)9,
+    (uint8_t *)10,
+    (uint16_t *)11,
+    (uint16_t *)12,
+    (void *)13
+};
 
 int update_vector_table(uint8_t vector_no, void *exception_handler)
 {
     if( (vector_no < 2) ) return 0xff;
 
-    // pfff....
+    // the value being written by this function is a void * (address to an exception handler)
+    // this value needs to be written into a memory location that is
+    // calculated based on the vector number which is a pointer by itself
+    // hence, the type is void **
     void **vector_address = (void *)((uint32_t)vector_no << 2);
 
     *vector_address = exception_handler;
