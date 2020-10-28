@@ -11,5 +11,8 @@ void init()
 	// Zero .bss section
 	for (dst = &bss; dst< &bssend; dst++) *dst = 0xb0;
 
+	// do something with a vector value :-)
+	update_vector_table(255, pokeb);
+
     kmain();
 }

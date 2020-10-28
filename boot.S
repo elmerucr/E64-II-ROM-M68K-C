@@ -12,7 +12,11 @@
 
 boot:
     movew   #0x2700,%sr             // disable all interrupts (useless on cold boot, matters for software reset)
-    movel   #0xc00000,VECTOR_045    // put address in Trap 13 vector
+
+    //movel   #0xc00000,VECTOR_045    // put address in Trap 13 vector
     //trap    #13
+
+
+
     jmp     _init
 

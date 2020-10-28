@@ -1,6 +1,19 @@
 #include "kernel.h"
 
 
+int update_vector_table(uint8_t vector_no, void *exception_handler)
+{
+    if( (vector_no < 2) ) return 0xff;
+
+    // pfff....
+    void **vector_address = (void *)((uint32_t)vector_no << 2);
+
+    *vector_address = exception_handler;
+
+    return 0;
+}
+
+
 uint8_t peekb(uint32_t address)
 {
     return *(uint8_t *)address;
