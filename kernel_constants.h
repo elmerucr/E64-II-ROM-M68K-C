@@ -74,4 +74,6 @@
 
 #define SID_BASE_ADDRESS    (IO_BASE_ADDRESS+0x0500)
 
+#define CHAR_ROM        0xFB8000
+
 #endif

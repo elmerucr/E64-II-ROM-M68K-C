@@ -19,5 +19,7 @@ void init()
 
 	set_interrupt_priority_mask(1);
 
+	build_character_ram((uint8_t *)CHAR_ROM, (uint16_t *)0xE00000);
+
     kmain();
 }

@@ -19,6 +19,7 @@ uint32_t peekl(uint32_t address);
 uint8_t *memcpy(uint8_t *dest, const uint8_t *src, size_t count);
 uint8_t *memset(uint8_t *dest, uint8_t val, size_t count);
 
+void build_character_ram(uint8_t *source, uint16_t *dest);
 int update_vector_table(uint8_t vector_no, void *exception_handler);
 void set_interrupt_priority_mask(uint8_t value);
 

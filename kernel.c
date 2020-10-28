@@ -82,3 +82,19 @@ uint8_t *memset(uint8_t *dest, uint8_t val, size_t count)
     for(uint32_t i=0; i<count; i++) dest[i] = val;
     return dest;
 }
+
+
+void build_character_ram(uint8_t *source, uint16_t *dest)
+{
+    for(int i=0; i<2048; i++)
+    {
+        uint8_t byte = source[i];
+        uint8_t count = 8;
+        while(count--)
+        {
+            *dest = (byte & 0b10000000) ? C64_GREY : 0x0000;
+            dest++;
+            byte = byte << 1;
+        }
+    }
+}
