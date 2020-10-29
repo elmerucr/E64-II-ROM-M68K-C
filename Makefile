@@ -3,7 +3,6 @@ TOOLCHAIN_PREFIX = m68k-elf-
 # boot.o should be the first on the list (linker script / entry point)
 OBJECTS =	boot.o \
 			kernel.o \
-			kernel_asm.o \
 			init.o \
 			kmain.o \
 			vicv.o

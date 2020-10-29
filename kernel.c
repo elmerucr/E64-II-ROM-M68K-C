@@ -98,3 +98,21 @@ void build_character_ram(uint8_t *source, uint16_t *dest)
         }
     }
 }
+
+
+void set_interrupt_priority_level(uint16_t value)
+{
+    value = (value & 0b00000111) << 8;
+
+    __asm__ __volatile__
+    (
+        "move.w %0,%%d0\n\t"
+        "move.w %%sr,%%d1\n\t"
+        "andi.w #0xf8ff,%%d1\n\t"
+        "or.w %%d0,%%d1\n\t"
+        "move.w %%d1,%%sr"
+        :               /* outputs */
+        : "g"(value)    /* inputs  */
+        :               /* clobbered regs */
+    );
+}

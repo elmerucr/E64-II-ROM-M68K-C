@@ -2,14 +2,9 @@
 
     .text
 
-    /* Supervisor stackpointer and initial program counter are
-     * stored at the start of rom image. The logic in E64-II
-     * makes the first 8 bytes of this rom image visible on
-     * addresses 0 to 7 (vector 0 and 1).
-     */
-    dc.l    0x00100000
-    dc.l    boot
+    dc.l    0x00100000      | supervisor stackpointer (visible at 0x000000 in E64-II)
+    dc.l    boot            | initial program counter (visible at 0x000004 in E64-II)
 
 boot:
-    movew   #0x2700,%sr             // disable all interrupts (useless on cold boot, matters for software reset)
+    movew   #0x2700,%sr     | disable all interrupts (useless on cold boot, matters for software reset)
     jmp     _init

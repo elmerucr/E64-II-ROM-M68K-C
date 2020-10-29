@@ -17,7 +17,7 @@ void init()
 
 	update_vector_table(26, vblank_exception_handler);	// vector 26 (interrupt level 2) connected to vblank handler
 
-	set_interrupt_priority_mask(1);
+	set_interrupt_priority_level(9);
 
 	build_character_ram((uint8_t *)CHAR_ROM, (uint16_t *)0xE00000);
 
