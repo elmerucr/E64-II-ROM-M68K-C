@@ -1,11 +1,14 @@
 TOOLCHAIN_PREFIX = m68k-elf-
+VPATH = src
 
 # boot.o should be the first on the list (linker script / entry point)
-OBJECTS =	boot.o \
-			kernel.o \
-			init.o \
-			kmain.o \
-			vicv.o
+OBJECTS =	obj/boot.o
+
+# order of other objects doesn't matter
+OBJECTS +=	obj/kernel.o \
+			obj/init.o \
+			obj/kmain.o \
+			obj/vicv.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc
 
@@ -32,14 +35,14 @@ rom.bin: rom_unpatched.bin mk_rom
 rom_unpatched.bin: $(OBJECTS) rom.ld
 	$(LD) $(LDFLAGS) $(OBJECTS) -o rom_unpatched.bin
 
-%.o: %.c
+obj/%.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.S
+obj/%.o: %.S
 	$(CC) $(CFLAGS) $< -o $@
 
-mk_rom: mk_rom.c
-	$(CCNATIVE) -o mk_rom mk_rom.c
+mk_rom: tools/mk_rom.c
+	$(CCNATIVE) -o mk_rom tools/mk_rom.c
 
 clean:
 	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom $(OBJECTS)
