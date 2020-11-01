@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "vicv.h"
+#include "sids.h"
 
 void init()
 {
@@ -15,11 +16,15 @@ void init()
 
 	pokew(BLITTER_CLEAR_COLOR, C64_BLUE);
 
+	update_vector_table(3, address_error_exception_handler);
 	update_vector_table(26, vblank_exception_handler);	// vector 26 (interrupt level 2) connected to vblank handler
 
-	set_interrupt_priority_level(9);
-
 	build_character_ram((uint8_t *)CHAR_ROM, (uint16_t *)0xE00000);
+
+	set_interrupt_priority_level(1);
+
+	sids_reset();
+	sids_welcome_sound();
 
     kmain();
 }

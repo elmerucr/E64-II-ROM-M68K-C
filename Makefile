@@ -6,6 +6,7 @@ OBJECTS =	obj/boot.o
 
 # order of other objects doesn't matter
 OBJECTS +=	obj/kernel.o \
+			obj/kernel_asm.o \
 			obj/init.o \
 			obj/kmain.o \
 			obj/sids.o \
