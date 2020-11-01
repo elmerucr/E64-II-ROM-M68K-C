@@ -1,4 +1,4 @@
-#include "kernel_constants.h"
+#include "definitions.h"
 
     .globl  _vblank_exception_handler
 

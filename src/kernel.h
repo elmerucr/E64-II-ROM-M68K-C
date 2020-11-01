@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
-#include "kernel_constants.h"
+#include "definitions.h"
 
 #ifndef KERNEL_H
 #define KERNEL_H

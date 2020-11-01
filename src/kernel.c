@@ -3,7 +3,7 @@
 
 struct surface_blit default_screen =
 {
-    0b00001000,     // flags 0 - tile mode, simple color, color per tile
+	0b00001000,     // flags 0 - tile mode, simple color, color per tile
 	0b00000000,     // flags 1 - no stretching, mirroring etc
 	0b01010110,     // height 2^%101 = 32 chars = 256 pixels, width 2^%110 = 64 chars  = 512 pixels
 	0b00000000,     // currently unused.... :-)
@@ -106,11 +106,11 @@ void set_interrupt_priority_level(uint16_t value)
 
     __asm__ __volatile__
     (
-        "move.w %0,%%d0\n\t"
-        "move.w %%sr,%%d1\n\t"
-        "andi.w #0xf8ff,%%d1\n\t"
-        "or.w %%d0,%%d1\n\t"
-        "move.w %%d1,%%sr"
+        "move.w %0,%%d0      \n\t"
+        "move.w %%sr,%%d1    \n\t"
+        "andi.w #0xf8ff,%%d1 \n\t"
+        "or.w %%d0,%%d1      \n\t"
+        "move.w %%d1,%%sr    "
         :               /* outputs */
         : "g"(value)    /* inputs  */
         :               /* clobbered regs */

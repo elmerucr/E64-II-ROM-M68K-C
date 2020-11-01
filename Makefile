@@ -8,6 +8,7 @@ OBJECTS =	obj/boot.o
 OBJECTS +=	obj/kernel.o \
 			obj/init.o \
 			obj/kmain.o \
+			obj/sids.o \
 			obj/vicv.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc
@@ -19,7 +20,7 @@ CFLAGS =	-fleading-underscore \
 			-mshort \
 			-m68000 \
 			-fomit-frame-pointer \
-			-Wall -Wextra -c -O1 \
+			-Wall -Wextra -c -O0 \
 			-lgcc \
 			-ffreestanding
 LD = $(TOOLCHAIN_PREFIX)ld

@@ -1,5 +1,7 @@
-#ifndef KERNEL_CONSTANTS_H
-#define KERNEL_CONSTANTS_H
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+
+#define INITIAL_SSP         0x00100000      // initial value of supervisor stackpointer
 
 #define VECTOR_000          0x00000000      // supervisor stackpointer
 #define VECTOR_001          0x00000004      // reset vector (initial program counter)
@@ -72,7 +74,9 @@
 #define C64_LIGHTBLUE	0xF67D
 #define C64_LIGHTGREY	0xFAAA
 
-#define SID_BASE_ADDRESS    (IO_BASE_ADDRESS+0x0500)
+#define SIDS_BASE_ADDRESS   (IO_BASE_ADDRESS+0x0500)
+#define SID0_BASE_ADDRESS   SIDS_BASE_ADDRESS
+#define SID1_BASE_ADDRESS   SIDS_BASE_ADDRESS+0x20
 
 #define CHAR_ROM        0xFB8000
 
