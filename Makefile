@@ -10,7 +10,8 @@ OBJECTS +=	obj/kernel.o \
 			obj/init.o \
 			obj/kmain.o \
 			obj/sids.o \
-			obj/vicv.o
+			obj/vicv.o \
+			obj/vicv_asm.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc
 

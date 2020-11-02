@@ -1,22 +1,10 @@
 #include "kernel.h"
 #include "vicv.h"
 
-struct surface_blit default_screen =
-{
-	0b00001000,     // flags 0 - tile mode, simple color, color per tile
-	0b00000000,     // flags 1 - no stretching, mirroring etc
-	0b01010110,     // height 2^%101 = 32 chars = 256 pixels, width 2^%110 = 64 chars  = 512 pixels
-	0b00000000,     // currently unused.... :-)
-	0,              // x
-	16,             // y
-	0xF0A0,         // foreground color
-	0xF222,         // background color
-    (uint16_t *)9,
-    (uint8_t *)10,
-    (uint16_t *)11,
-    (uint16_t *)12,
-    (void *)13
-};
+
+void *heap_start;
+void *heap_end;
+
 
 int update_vector_table(uint8_t vector_no, void *exception_handler)
 {
@@ -115,4 +103,12 @@ void set_interrupt_priority_level(uint16_t value)
         : "g"(value)    /* inputs  */
         :               /* clobbered regs */
     );
+}
+
+void *malloc(size_t chunk)
+{
+    void *return_value = heap_end;
+    size_t no_of_bytes = (chunk & 0b1) ? chunk+1 : chunk;
+    heap_end = (void *)((uint32_t)heap_end + no_of_bytes);
+    return return_value;
 }

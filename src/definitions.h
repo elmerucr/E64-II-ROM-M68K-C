@@ -78,6 +78,7 @@
 #define SID0_BASE_ADDRESS   SIDS_BASE_ADDRESS
 #define SID1_BASE_ADDRESS   (SIDS_BASE_ADDRESS+0x20)
 
-#define CHAR_ROM        0xFB8000
+#define CHAR_ROM        0xfb8000
+#define CHAR_RAM        0xe00000
 
 #endif

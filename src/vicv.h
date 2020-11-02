@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #ifndef VICV_H
 #define VICV_H
 
@@ -18,6 +20,7 @@ struct __attribute__((packed)) surface_blit
     void        *user_data;                     // 4 bytes
 };
 
-void vblank_exception_handler();
+void vicv_vblank_exception_handler();
+void vicv_init();
 
 #endif
