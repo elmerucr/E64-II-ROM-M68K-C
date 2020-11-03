@@ -1,11 +1,9 @@
 #include "kernel.h"
 #include "vicv.h"
 
-
 void *heap_start;
 void *heap_end;
 void *character_ram;
-
 
 int update_vector_table(uint8_t vector_no, void *exception_handler)
 {

@@ -13,12 +13,14 @@ struct __attribute__((packed)) surface_blit
     uint16_t    y;
     uint16_t    foreground_color;
     uint16_t    background_color;
-    uint16_t    *pixel_data;                    // should be 4 bytes in size (it's pointer), its data type is a color
+    uint16_t    *pixel_data;                    // should be 4 bytes in size (pointer), data type is a color
     uint8_t     *tile_data;                     // again 4 bytes (check!), to an 8 bit value
     uint16_t    *tile_color_data;               // 4 bytes
     uint16_t    *tile_background_color_data;    // 4 bytes
     void        *user_data;                     // 4 bytes
 };
+
+extern void **blitter_list;
 
 void vicv_vblank_exception_handler();
 void vicv_init();

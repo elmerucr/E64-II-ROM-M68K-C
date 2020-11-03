@@ -1,6 +1,8 @@
 #include "vicv.h"
 #include "kernel.h"
 
+#define MAX_BLITS   256
+
 struct surface_blit default_screen =
 {
 	0b00001000,     // flags 0 - tile mode, simple color, color per tile
@@ -9,17 +11,24 @@ struct surface_blit default_screen =
 	0b00000000,     // currently unused.... :-)
 	0,              // x
 	16,             // y
-	0xF0A0,         // foreground color
-	0xF222,         // background color
+	0xf0a0,         // foreground color
+	0xf222,         // background color
     (uint16_t *)0,
-    (uint8_t *) 0,
+    (uint8_t  *)0,
     (uint16_t *)0,
     (uint16_t *)0,
-    (void *)13
+    (void     *)0
 };
+
+void **blitter_list;
 
 void vicv_init()
 {
+    blitter_list = malloc(MAX_BLITS * sizeof(void *));
+    for(int i=0; i<MAX_BLITS; i++) blitter_list[i] = (void *)0x00000000;
+
+    blitter_list[0] = (void *)&default_screen;
+
     default_screen.pixel_data = (uint16_t *)character_ram;
     default_screen.tile_data = (uint8_t *)malloc(0x800);
     default_screen.tile_color_data = (uint16_t *)malloc(0x800 * sizeof(uint16_t));
