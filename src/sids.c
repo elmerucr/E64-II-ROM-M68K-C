@@ -16,8 +16,8 @@ void sids_reset()
         pokeb(address, 0x00);
     }
 
-    sid0->filter_mode_volume = 0xf;
-    sid1->filter_mode_volume = 0xf;
+    sid0->filtermode_volume = 0xf;
+    sid1->filtermode_volume = 0xf;
 
     for(uint8_t i=0; i<8; i++)
     {

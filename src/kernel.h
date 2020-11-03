@@ -21,6 +21,7 @@ uint8_t *memset(uint8_t *dest, uint8_t val, size_t count);
 
 extern void *heap_start;
 extern void *heap_end;
+extern void *character_ram;
 
 void *malloc(size_t chunk);
 

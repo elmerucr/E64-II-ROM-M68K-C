@@ -34,7 +34,7 @@ struct __attribute__((packed)) sid
 
     uint16_t    filter_cutoff;              // 0x18
     uint8_t     filter_resonance;           // 0x1a
-    uint8_t     filter_mode_volume;         // 0x1b
+    uint8_t     filtermode_volume;          // 0x1b
 
 
     uint8_t     pot_x;                      // 0x1c

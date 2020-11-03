@@ -26,16 +26,16 @@ void init()
 	heap_start = (void *)&bssend;
 	heap_end   = heap_start;
 
-
-	pokew(BLITTER_CLEAR_COLOR, C64_BLUE);
-
-	vicv_init();
-
 	update_vector_table(3, address_error_exception_handler);
 	update_vector_table(26, vicv_vblank_exception_handler);	// vector 26 (interrupt level 2) connected to vblank handler
 
-	build_character_ram((uint8_t *)CHAR_ROM, (uint16_t *)CHAR_RAM);
+	character_ram = malloc(256 * 64 * sizeof(uint16_t));
+	build_character_ram((uint8_t *)CHAR_ROM, (uint16_t *)character_ram);
+	vicv_init();
+	pokew(BLITTER_CLEAR_COLOR, C64_BLUE);
 
+	/*	Enable interrupts with level 2 and higher.
+	 */
 	set_interrupt_priority_level(1);
 
 	sids_reset();

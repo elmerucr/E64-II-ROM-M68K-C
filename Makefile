@@ -22,7 +22,7 @@ CFLAGS =	-fleading-underscore \
 			-mshort \
 			-m68000 \
 			-fomit-frame-pointer \
-			-Wall -Wextra -c -O0 \
+			-Wall -Wextra -c -O2 \
 			-lgcc \
 			-ffreestanding
 LD = $(TOOLCHAIN_PREFIX)ld
