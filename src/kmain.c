@@ -2,8 +2,6 @@
 
 void kmain()
 {
-	pokeb(VICV_BORDER_SIZE, 16);
-
 	static uint16_t color = 0;
 
 	for(;;)

@@ -32,6 +32,7 @@ void init()
 	character_ram = malloc(256 * 64 * sizeof(uint16_t));
 	build_character_ram((uint8_t *)CHAR_ROM, (uint16_t *)character_ram);
 	vicv_init();
+	pokeb(VICV_BORDER_SIZE, 16);
 	pokew(VICV_BORDER_COLOR,   C64_BLACK);
 	pokew(BLITTER_CLEAR_COLOR, C64_BLUE );
 
