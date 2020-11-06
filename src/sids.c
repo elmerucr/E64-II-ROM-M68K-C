@@ -2,6 +2,7 @@
 #include "definitions.h"
 #include "kernel.h"
 
+
 struct sid *sid0 = (struct sid *)SID0_BASE_ADDRESS;
 struct sid *sid1 = (struct sid *)SID1_BASE_ADDRESS;
 

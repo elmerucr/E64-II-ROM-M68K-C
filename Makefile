@@ -1,4 +1,5 @@
 TOOLCHAIN_PREFIX = m68k-elf-
+
 VPATH = src
 
 # boot.o should be the first on the list (linker script / entry point)

@@ -3,6 +3,7 @@
 #ifndef SIDS_H
 #define SIDS_H
 
+
 struct __attribute__((packed)) sid
 {
     uint16_t    voice_1_frequency;          // 0x00
