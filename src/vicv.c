@@ -33,4 +33,5 @@ void vicv_init()
     default_screen.pixel_data = (uint16_t *)character_ram;
     default_screen.tile_data = (uint8_t *)malloc(0x800);
     default_screen.tile_color_data = (uint16_t *)malloc(0x800 * sizeof(uint16_t));
+    default_screen.tile_background_color_data = (uint16_t *)malloc(0x800 * sizeof(uint16_t));
 }
