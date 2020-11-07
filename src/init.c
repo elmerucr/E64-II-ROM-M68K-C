@@ -6,22 +6,50 @@
 
 void move_sections_from_rom_to_kernel_ram();
 
+struct terminal main_terminal;
+
 void init()
 {
 	move_sections_from_rom_to_kernel_ram();
 
 	update_vector_table(3,  address_error_exception_handler);
-	update_vector_table(26, vicv_vblank_exception_handler);		// vector 26 (interrupt level 2) connected to vblank handler
+	update_vector_table(26, vicv_vblank_exception_handler);		// irq level 2 connect to VBLANK handler
 
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
 	blitter_init();
 	pokeb(VICV_BORDER_SIZE, 16);
-	pokew(VICV_BORDER_COLOR,   C64_BLACK);
-	pokew(BLITTER_CLEAR_COLOR, C64_BLUE );
+	pokew(VICV_BORDER_COLOR, C64_BLACK);
+	pokew(BLITTER_CLEAR_COLOR, C64_BLUE);
 
-	struct terminal main_terminal;
-	terminal_init(&main_terminal, SURFACE_BLIT_X__64_TILES | SURFACE_BLIT_Y__32_TILES, 0, 16, C64_LIGHTBLUE);
+	terminal_init(
+		&main_terminal,
+		BLIT_X__16_TILES | BLIT_Y___8_TILES,
+		128,
+		16,
+		C64_LIGHTGREEN,
+		C64_GREEN
+	);
+
+	blitter_add_action((u32)&main_terminal.terminal_blit);
+
+	terminal_clear(&main_terminal);
+
+	terminal_put_symbol(&main_terminal, ' ');
+	terminal_put_symbol(&main_terminal, '*');
+	terminal_put_symbol(&main_terminal, '*');
+	terminal_put_symbol(&main_terminal, ' ');
+	terminal_put_symbol(&main_terminal, 'e');
+	terminal_put_symbol(&main_terminal, 'l');
+	terminal_put_symbol(&main_terminal, 'm');
+	terminal_put_symbol(&main_terminal, 'e');
+	terminal_put_symbol(&main_terminal, 'r');
+	terminal_put_symbol(&main_terminal, 'u');
+	terminal_put_symbol(&main_terminal, 'c');
+	terminal_put_symbol(&main_terminal, 'r');
+	terminal_put_symbol(&main_terminal, ' ');
+	terminal_put_symbol(&main_terminal, '*');
+	terminal_put_symbol(&main_terminal, '*');
 
 	/*
 	 * Enable all interrupts with level 2 and higher.
@@ -31,7 +59,7 @@ void init()
 	sids_reset();
 	sids_welcome_sound();
 
-    kmain();
+	kmain();
 }
 
 void move_sections_from_rom_to_kernel_ram()

@@ -52,4 +52,9 @@ mk_rom: tools/mk_rom.c
 	$(CCNATIVE) -o mk_rom tools/mk_rom.c
 
 clean:
-	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom $(OBJECTS)
+	rm rom.cpp
+	rm rom.bin
+	rm rom_unpatched.bin
+	rm rom.map
+	rm mk_rom
+	rm $(OBJECTS)
