@@ -7,28 +7,29 @@ OBJECTS =	obj/boot.o
 
 # order of other objects doesn't matter
 OBJECTS +=	obj/blitter.o \
-			obj/kernel.o \
-			obj/kernel_asm.o \
-			obj/init.o \
-			obj/kmain.o \
-			obj/sids.o \
-			obj/terminal.o \
-			obj/vicv.o \
-			obj/vicv_asm.o
+		obj/kernel.o \
+		obj/kernel_asm.o \
+		obj/init.o \
+		obj/kmain.o \
+		obj/sids.o \
+		obj/terminal.o \
+		obj/vicv_asm.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc
 
 # -fleading-underscore makes it linkable under linux (or something to do with elf????)
 # -O0 and -O1 seem to work, -O2 and -O3 cause problems
 CFLAGS =	-fleading-underscore \
-			-nostdlib \
-			-mshort \
-			-m68000 \
-			-fomit-frame-pointer \
-			-Wall -Wextra -c -O2 \
-			-lgcc \
-			-ffreestanding
+		-nostdlib \
+		-mshort \
+		-m68000 \
+		-fomit-frame-pointer \
+		-Wall -Wextra -c -O2 \
+		-lgcc \
+		-ffreestanding
+
 LD = $(TOOLCHAIN_PREFIX)ld
+
 LDFLAGS = -T rom.ld -Map=rom.map
 
 CCNATIVE = gcc

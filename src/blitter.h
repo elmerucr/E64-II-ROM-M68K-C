@@ -1,7 +1,58 @@
+#include "kernel.h"
+
 #ifndef BLITTER_H
 #define BLITTER_H
 
+#define SURFACE_BLIT_TILE_MODE			0b00000000
+#define SURFACE_BLIT_BITMAP_MODE		0b00000001
+#define SURFACE_BLIT_BACKGROUND_OFF		0b00000000
+#define SURFACE_BLIT_BACKGROUND_ON		0b00000010
+#define SURFACE_BLIT_SIMPLE_COLOR		0b00000000
+#define SURFACE_BLIT_MULTI_COLOR		0b00000100
+#define SURFACE_BLIT_COLOR_PER_TILE_OFF		0b00000000
+#define SURFACE_BLIT_COLOR_PER_TILE_ON		0b00010000
 
+#define SURFACE_BLIT_HORIZONTAL_STRETCHING	0b00000001
+#define SURFACE_BLIT_VERTICAL_STRETCHING	0b00000100
+#define SURFACE_BLIT_HORIZONTAL_FLIP		0b00010000
+#define SURFACE_BLIT_VERTICAL_FLIP		0b00100000
 
+#define SURFACE_BLIT_X___1_TILES		0b00000000
+#define SURFACE_BLIT_X___2_TILES		0b00000001
+#define SURFACE_BLIT_X___4_TILES		0b00000010
+#define SURFACE_BLIT_X___8_TILES		0b00000011
+#define SURFACE_BLIT_X__16_TILES		0b00000100
+#define SURFACE_BLIT_X__32_TILES		0b00000101
+#define SURFACE_BLIT_X__64_TILES		0b00000110
+#define SURFACE_BLIT_X_128_TILES		0b00000111
+
+#define SURFACE_BLIT_Y___1_TILES		0b00000000
+#define SURFACE_BLIT_Y___2_TILES		0b00010000
+#define SURFACE_BLIT_Y___4_TILES		0b00100000
+#define SURFACE_BLIT_Y___8_TILES		0b00110000
+#define SURFACE_BLIT_Y__16_TILES		0b01000000
+#define SURFACE_BLIT_Y__32_TILES		0b01010000
+#define SURFACE_BLIT_Y__64_TILES		0b01100000
+#define SURFACE_BLIT_Y_128_TILES		0b01110000
+
+struct __attribute__((packed)) surface_blit {
+	u8	flags_0;
+	u8	flags_1;
+	u8	size_in_tiles_log2;
+	u8	currently_unused;
+	u16	x;
+	u16	y;
+	u16	foreground_color;
+	u16	background_color;
+	u16	*pixel_data;
+	u8	*tile_data;
+	u16	*tile_color_data;
+	u16	*tile_background_color_data;
+	void	*user_data;
+};
+
+void blitter_init();
+
+extern void **blitter_list;
 
 #endif

@@ -2,10 +2,9 @@
 
 void kmain()
 {
-	static uint16_t color = 0;
+	static u16 color = 0;
 
-	for(;;)
-	{
+	for (;;) {
 		pokew(VICV_BORDER_COLOR, color);
 		color++;
 	}
