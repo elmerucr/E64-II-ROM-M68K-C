@@ -13,6 +13,7 @@ OBJECTS +=	obj/blitter.o \
 		obj/kmain.o \
 		obj/sids.o \
 		obj/terminal.o \
+		obj/vicv.o \
 		obj/vicv_asm.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc

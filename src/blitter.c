@@ -7,7 +7,7 @@ struct blit default_screen =
 {
 	0b00001000,	// flags 0 - tile mode, simple color, color per tile
 	0b00000000,	// flags 1 - no stretching, mirroring etc
-	0b01010110,	// height 2^%101 = 32 chars (256 pix), width 2^%110 = 64 chars (512 pix)
+	0b01010110,	// height 2^%101 = 32 (256px), width 2^%110 = 64 (512px)
 	0b00000000,	// currently unused.... :-)
 	0,		// x
 	16,		// y

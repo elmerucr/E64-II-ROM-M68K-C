@@ -13,7 +13,7 @@ void init()
 	move_sections_from_rom_to_kernel_ram();
 
 	update_vector_table(3,  address_error_exception_handler);
-	update_vector_table(26, vicv_vblank_exception_handler);		// irq level 2 connect to VBLANK handler
+	update_vector_table(26, vicv_vblank_exception_handler);	// irq 2, VBLANK
 
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);

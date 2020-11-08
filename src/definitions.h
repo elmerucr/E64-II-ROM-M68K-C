@@ -1,10 +1,10 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-#define INITIAL_SSP         0x00100000      // initial value of supervisor stackpointer
+#define INITIAL_SSP         0x00100000      // initial value of superv stackp
 
 #define VECTOR_000          0x00000000      // supervisor stackpointer
-#define VECTOR_001          0x00000004      // reset vector (initial program counter)
+#define VECTOR_001          0x00000004      // reset vector (init progr counter)
 #define VECTOR_002          0x00000008      // bus error
 #define VECTOR_003          0x0000000c      // address error
 #define VECTOR_004          0x00000010      // illegal instruction
@@ -23,7 +23,7 @@
 #define VECTOR_028          0x00000070      // interrupt level 4
 #define VECTOR_029          0x00000074      // interrupt level 5
 #define VECTOR_030          0x00000078      // interrupt level 6
-#define VECTOR_031          0x0000007c      // interrupt level 7 (non-maskable interrupt)
+#define VECTOR_031          0x0000007c      // interrupt level 7 (non-maskable)
 #define VECTOR_032          0x00000080      // Trap 0
 #define VECTOR_033          0x00000084      // Trap 1
 #define VECTOR_034          0x00000088      // Trap 2
@@ -46,11 +46,11 @@
 
 #define IO_BASE_ADDRESS     0x00fb0000
 
-#define VICV_BASE_ADDRESS       (IO_BASE_ADDRESS+0x0400)
-#define	VICV_BORDER_COLOR	    (VICV_BASE_ADDRESS+0x00)
-#define VICV_BORDER_SIZE	    (VICV_BASE_ADDRESS+0x0c)
-#define VICV_ISR                (VICV_BASE_ADDRESS+0x0e)
-#define VICV_BUFFERSWAP		    (VICV_BASE_ADDRESS+0x10)
+#define VICV_BASE_ADDRESS	(IO_BASE_ADDRESS+0x0400)
+#define VICV_ISR		(VICV_BASE_ADDRESS+0x00)
+#define VICV_BUFFERSWAP		(VICV_BASE_ADDRESS+0x01)
+#define VICV_BORDER_SIZE	(VICV_BASE_ADDRESS+0x02)
+#define	VICV_BORDER_COLOR	(VICV_BASE_ADDRESS+0x04)
 
 #define BLITTER_BASE_ADDRESS	(IO_BASE_ADDRESS+0x700)
 #define BLITTER_CONTROL		BLITTER_BASE_ADDRESS
