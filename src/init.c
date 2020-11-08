@@ -18,8 +18,12 @@ void init()
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
 	blitter_init();
-	pokeb(VICV_BORDER_SIZE, 16);
-	pokew(VICV_BORDER_COLOR, C64_BLACK);
+
+	pokeb(VICV_HOR_BORDER_SIZE, 16);
+	pokew(VICV_HOR_BORDER_COLOR, C64_BLACK);
+	//vicv->horizontal_border_size = 16;
+	//vicv->horizontal_border_color = C64_BLACK;
+
 	pokew(BLITTER_CLEAR_COLOR, C64_BLUE);
 
 	terminal_init(

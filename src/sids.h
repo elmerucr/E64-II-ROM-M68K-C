@@ -3,6 +3,10 @@
 #ifndef SIDS_H
 #define SIDS_H
 
+#define SID0	((volatile struct sid *) SID0_BASE_ADDRESS)
+#define SID1	((volatile struct sid *) SID1_BASE_ADDRESS)
+#define EFFECTS	((volatile struct effects *) (SIDS_BASE_ADDRESS+0x80))
+
 struct __attribute__((packed)) sid {
 	u16    voice_1_frequency;          // 0x00
 	u16    voice_1_pulsewidth;         // 0x02
@@ -38,7 +42,7 @@ struct __attribute__((packed)) sid {
 	u8     env3;                       // 0x1f
 };
 
-struct __attribute__((packed)) sid_balance_registers {
+struct __attribute__((packed)) effects {
 	u8 sid0_left;
 	u8 sid0_right;
 	u8 sid1_left;

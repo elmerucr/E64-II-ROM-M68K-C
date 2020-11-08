@@ -1,7 +1,8 @@
 #include "terminal.h"
 #include "kernel.h"
 
-void terminal_init(struct terminal *local, u8 size_in_tiles_log2, u16 x_pos, u16 y_pos, u16 foreground_color, u16 background_color)
+void terminal_init(struct terminal *local, u8 size_in_tiles_log2, u16 x_pos,
+		   u16 y_pos, u16 foreground_color, u16 background_color)
 {
 	local->terminal_blit.flags_0 =
 		BLIT_TILE_MODE		|
