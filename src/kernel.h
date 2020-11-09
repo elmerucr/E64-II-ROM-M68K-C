@@ -11,13 +11,15 @@ typedef uint32_t u32;
 
 void kmain();
 
-// poke & peek functionality
-inline void pokeb(u32 address, u8 byte)  { *(u8  *)address = byte; }
-inline void pokew(u32 address, u16 word) { *(u16 *)address = word; }
-inline void pokel(u32 address, u32 lwrd) { *(u32 *)address = lwrd; }
-inline u8   peekb(u32 address) { return *(u8  *)address; }
-inline u16  peekw(u32 address) { return *(u16 *)address; }
-inline u32  peekl(u32 address) { return *(u32 *)address; }
+// poke functionality
+#define	POKEB(A, B)	*(volatile u8  *)A = B
+#define POKEW(A, B)	*(volatile u16 *)A = B
+#define POKEL(A, B)	*(volatile u32 *)A = B
+
+// peek functionality
+#define	PEEKB(A)	*(volatile u8  *)A
+#define	PEEKW(A)	*(volatile u16 *)A
+#define	PEEKL(A)	*(volatile u32 *)A
 
 u8 *memcpy(u8 *dest, const u8 *src, size_t count);
 u8 *memset(u8 *dest, u8 val, size_t count);

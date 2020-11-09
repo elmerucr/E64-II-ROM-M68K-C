@@ -35,6 +35,15 @@
 #define BLIT_Y__64_TILES	0b01100000
 #define BLIT_Y_128_TILES	0b01110000
 
+#define	BLITTER	((volatile struct blitter_ic *) BLITTER_BASE_ADDRESS)
+
+struct __attribute__((packed)) blitter_ic {
+	u8	control_register;
+	u8	reserved;
+	u16	data_register;
+	u32	clear_color;
+};
+
 struct __attribute__((packed)) blit {
 	u8	flags_0;
 	u8	flags_1;

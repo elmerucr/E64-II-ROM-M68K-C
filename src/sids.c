@@ -8,14 +8,14 @@ void sids_reset()
 	// 	pokeb(address, 0x00);
 	// }
 	for (u32 address = SIDS_BASE_ADDRESS; address < (SIDS_BASE_ADDRESS+0x80); address++)
-		pokeb(address, 0x00);
+		POKEB(address, 0x00);
 
 	SID0->filtermode_volume = 0xf;
 	SID1->filtermode_volume = 0xf;
 
 	for (u8 i=0; i<8; i++) {
 		u32 address = SIDS_BASE_ADDRESS+0x80+i;
-		pokeb(address, 0xff);
+		POKEB(address, 0xff);
 	}
 }
 
