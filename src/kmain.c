@@ -9,7 +9,7 @@ void kmain()
 		VICV->horizontal_border_color = color++;
 	}
 
-	VICV->horizontal_border_color = C64_LIGHTBLUE;
+	VICV->horizontal_border_color = C64_BLACK;
 
 	for (;;) {}
 }
