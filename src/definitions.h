@@ -18,9 +18,9 @@
 
 #define VECTOR_024          0x00000060      // spurious interrupt
 #define VECTOR_025          0x00000064      // interrupt level 1
-#define VECTOR_026          0x00000068      // interrupt level 2
+#define VECTOR_026          0x00000068      // interrupt level 2 (vicv)
 #define VECTOR_027          0x0000006c      // interrupt level 3
-#define VECTOR_028          0x00000070      // interrupt level 4
+#define VECTOR_028          0x00000070      // interrupt level 4 (timers)
 #define VECTOR_029          0x00000074      // interrupt level 5
 #define VECTOR_030          0x00000078      // interrupt level 6
 #define VECTOR_031          0x0000007c      // interrupt level 7 (non-maskable)
@@ -53,6 +53,11 @@
 #define VICV_VER_BORDER_SIZE	(VICV_BASE_ADDRESS+0x03)
 #define	VICV_HOR_BORDER_COLOR	(VICV_BASE_ADDRESS+0x04)
 #define VICV_VER_BORDER_COLOR	(VICV_BASE_ADDRESS+0x05)
+
+#define TIMER_BASE_ADDRESS	(IO_BASE_ADDRESS+0x600)
+#define TIMER_STATUS_REGISTER	(TIMER_BASE_ADDRESS+0x00)
+#define TIMER_CONTROL_REGISTER	(TIMER_BASE_ADDRESS+0x01)
+#define TIMER_DATA_REGISTER	(TIMER_BASE_ADDRESS+0x02)
 
 #define BLITTER_BASE_ADDRESS	(IO_BASE_ADDRESS+0x700)
 #define BLITTER_CONTROL		(BLITTER_BASE_ADDRESS+0x00)

@@ -3,10 +3,14 @@
 #include "vicv.h"
 #include "sids.h"
 #include "terminal.h"
+#include "timer.h"
 
 void move_sections_from_rom_to_kernel_ram();
 
 struct terminal main_terminal;
+
+void increase_clear_color() { BLITTER->clear_color++; }
+void increase_border_size() { VICV->horizontal_border_size++; }
 
 void init()
 {
@@ -14,8 +18,15 @@ void init()
 
 	update_vector_table(3,  address_error_exception_handler);
 	update_vector_table(26, vicv_vblank_exception_handler);	// irq 2, VBLANK
+	update_vector_table(28, timer_exception_handler);	// irq 4
 
-	// to enforce address error
+	// testing timers
+	timer_update_handler(TIMER3, increase_clear_color);
+	timer_turn_on(TIMER3, 480);
+	timer_update_handler(TIMER2, increase_border_size);
+	timer_turn_on(TIMER2, 2480);
+
+	// to enforce an address error exception
 	//__asm__ ("movew %d0,0x911");
 
 	character_ram = malloc(256 * 64 * sizeof(u16));
