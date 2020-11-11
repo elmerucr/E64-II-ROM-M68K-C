@@ -9,8 +9,8 @@ void move_sections_from_rom_to_kernel_ram();
 
 struct terminal main_terminal;
 
-void increase_clear_color() { BLITTER->clear_color++; }
-void increase_border_size() { VICV->horizontal_border_size++; }
+static void increase_clear_color() { BLITTER->clear_color++; }
+static void increase_border_size() { VICV->horizontal_border_size++; }
 
 void init()
 {

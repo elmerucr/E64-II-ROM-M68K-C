@@ -39,8 +39,7 @@ u8 *memset(u8 *dest, u8 val, size_t count)
 
 void build_character_ram(u8 *source, u16 *dest)
 {
-	for (int i=0; i<2048; i++)
-	{
+	for (int i=0; i<2048; i++) {
 		u8 byte = source[i];
 		u8 count = 8;
 		while (count--) {
@@ -55,8 +54,7 @@ void set_interrupt_priority_level(u16 value)
 {
 	value = (value & 0b00000111) << 8;
 
-	__asm__ __volatile__
-	(
+	__asm__ __volatile__ (
 		"move.w %0,%%d0      \n\t"
 		"move.w %%sr,%%d1    \n\t"
 		"andi.w #0xf8ff,%%d1 \n\t"

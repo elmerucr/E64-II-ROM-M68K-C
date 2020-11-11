@@ -3,10 +3,6 @@
 
 void sids_reset()
 {
-	// for (u8 i=0; i<64; i++) {
-	// 	u32 address = SIDS_BASE_ADDRESS+i;
-	// 	pokeb(address, 0x00);
-	// }
 	for (u32 address = SIDS_BASE_ADDRESS; address < (SIDS_BASE_ADDRESS+0x80); address++)
 		POKEB(address, 0x00);
 
