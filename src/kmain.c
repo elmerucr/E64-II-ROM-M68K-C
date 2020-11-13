@@ -5,7 +5,7 @@ void kmain()
 {
 	u16 color = 0;
 
-	for (u32 i=0; i<1000000; i++) {
+	for (u32 i=0; i<2000; i++) {
 		VICV->horizontal_border_color = color++;
 	}
 

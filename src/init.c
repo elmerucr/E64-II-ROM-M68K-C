@@ -6,25 +6,20 @@
 #include "timer.h"
 
 void move_sections_from_rom_to_kernel_ram();
+void update_vector_table();
 
 struct terminal main_terminal;
 
 static void increase_clear_color() { BLITTER->clear_color++; }
-static void increase_border_size() { VICV->horizontal_border_size++; }
 
 void init()
 {
 	move_sections_from_rom_to_kernel_ram();
+	update_vector_table();
 
-	update_vector_table(3,  address_error_exception_handler);
-	update_vector_table(26, vicv_vblank_exception_handler);	// irq 2, VBLANK
-	update_vector_table(28, timer_exception_handler);	// irq 4
-
-	// testing timers
+	// testing timer
 	timer_update_handler(TIMER3, increase_clear_color);
 	timer_turn_on(TIMER3, 480);
-	timer_update_handler(TIMER2, increase_border_size);
-	timer_turn_on(TIMER2, 2480);
 
 	// to enforce an address error exception
 	//__asm__ ("movew %d0,0x911");
@@ -104,4 +99,11 @@ void move_sections_from_rom_to_kernel_ram()
 	 */
 	heap_start = (void *)&bssend;
 	heap_end   = heap_start;
+}
+
+void update_vector_table()
+{
+	update_vector_number(3,  address_error_exception_handler);
+	update_vector_number(26, vicv_vblank_exception_handler);		// irq 2
+	update_vector_number(28, timer_exception_handler);		// irq 4
 }

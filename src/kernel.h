@@ -31,7 +31,7 @@ extern void *character_ram;
 void *malloc(size_t chunk);
 
 void build_character_ram(u8 *source, u16 *dest);
-int  update_vector_table(u8 vector_no, void *exception_handler);
+int  update_vector_number(u8 vector_no, void *exception_handler);
 void set_interrupt_priority_level(u16 value);
 void address_error_exception_handler();
 

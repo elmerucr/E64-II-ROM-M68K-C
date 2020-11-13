@@ -5,9 +5,9 @@ void *heap_start;
 void *heap_end;
 void *character_ram;
 
-int update_vector_table(u8 vector_no, void *exception_handler)
+int update_vector_number(u8 vector_no, void *exception_handler)
 {
-	if ( (vector_no < 2) )
+	if ((vector_no < 2))
 		return 0xff;
 
 	/*
