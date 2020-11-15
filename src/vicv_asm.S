@@ -7,7 +7,7 @@
 _vicv_vblank_exception_handler:
 
 	movel	%a0,%sp@-
-	moveb   #1,VICV_ISR		// acknowledge interrupt
+	moveb   #1,VICV_ISR		| acknowledge interrupt
 	moveb   #1,VICV_BUFFERSWAP
 	moveal  _blitter_list,%a0
 1: 	movel   %a0@+,BLITTER_DATA

@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "definitions.h"
+#include "terminal.h"
 
 #ifndef KERNEL_H
 #define KERNEL_H
@@ -27,12 +28,16 @@ u8 *memset(u8 *dest, u8 val, size_t count);
 extern void *heap_start;
 extern void *heap_end;
 extern void *character_ram;
+extern struct terminal main_terminal;
 
 void *malloc(size_t chunk);
 
 void build_character_ram(u8 *source, u16 *dest);
 int  update_vector_number(u8 vector_no, void *exception_handler);
+
+u8   get_interrupt_priority_level();
 void set_interrupt_priority_level(u16 value);
+
 void address_error_exception_handler();
 
 #endif

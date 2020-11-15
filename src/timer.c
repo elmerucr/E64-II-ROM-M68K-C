@@ -26,6 +26,18 @@ void timer_update_handler(enum timer_number this_timer, void *callback_function)
 	case TIMER3:
 		timer3_vector = callback_function;
 		break;
+	case TIMER4:
+		timer4_vector = callback_function;
+		break;
+	case TIMER5:
+		timer5_vector = callback_function;
+		break;
+	case TIMER6:
+		timer6_vector = callback_function;
+		break;
+	case TIMER7:
+		timer7_vector = callback_function;
+		break;
 	default:
 		break;
 	}

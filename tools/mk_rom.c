@@ -38,11 +38,14 @@ int main(int argc, char *argv[]) {
 	printf("[mk_rom] writing 64k image 'rom.bin' and 'rom.cpp' for inclusion in E64-II\n");
 	f = fopen("rom.cpp","w");
 
-	fprintf(f, "// rom.cpp elmerucr (c)2020\n");
-	fprintf(f, "// built-in rom image for E64-II\n");
-	fprintf(f, "// %s\n",ctime(&t));
+	fprintf(f, "/*\n");
+	fprintf(f, " * E64-II-ROM (rom.cpp) elmerucr (c)2020\n");
+	fprintf(f, " *\n");
+	fprintf(f, " * built-in rom image for E64-II\n");
+	fprintf(f, " * %s",ctime(&t));
+	fprintf(f, " */\n\n");
 	fprintf(f, "#include <cstdint>\n\n");
-	fprintf(f, "uint8_t rom[65536] =\n{");
+	fprintf(f, "uint8_t rom[65536] = {");
 
 	for(int i = 0; i<(65535); i++) {
 		if(i%16 == 0) fprintf(f, "\n\t");

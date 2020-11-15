@@ -18,7 +18,10 @@ int update_vector_number(u8 vector_no, void *exception_handler)
 	 */
 	void **vector_address = (void *)((u32)vector_no << 2);
 
+
+	// STORE CURRENT IPL, MOVE TO 7
 	*vector_address = exception_handler;
+	// RESTORE IPL
 
 	return 0;
 }
@@ -49,6 +52,19 @@ void build_character_ram(u8 *source, u16 *dest)
 		}
 	}
 }
+
+// u8   get_interrupt_priority_level()
+// {
+// 	u16 status_register;
+
+// 	__asm__ __volatile__ (
+// 		"move.w	%sr,%%d0	\n\t"
+// 		"move.w %%d0,%0"
+// 		: "=g" (status_register)	/* outputs */
+// 	);
+
+// 	return (u8)((status_register & 0x0700) >> 8);
+// }
 
 void set_interrupt_priority_level(u16 value)
 {

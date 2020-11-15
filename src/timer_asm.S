@@ -6,6 +6,10 @@
 	.globl	_timer1_vector
 	.globl	_timer2_vector
 	.globl	_timer3_vector
+	.globl	_timer4_vector
+	.globl	_timer5_vector
+	.globl	_timer6_vector
+	.globl	_timer7_vector
 
 	.data
 
@@ -17,11 +21,20 @@ _timer2_vector:
 	dcl	_timer_handler_dummy
 _timer3_vector:
 	dcl	_timer_handler_dummy
+_timer4_vector:
+	dcl	_timer_handler_dummy
+_timer5_vector:
+	dcl	_timer_handler_dummy
+_timer6_vector:
+	dcl	_timer_handler_dummy
+_timer7_vector:
+	dcl	_timer_handler_dummy
 
 
 	.text
 
 _timer_exception_handler:
+	movel	%a0,%sp@-				| save A0
 	btst	#0,TIMER_STATUS_REGISTER
 	beq	1f
 	moveb	#0b00000001,TIMER_STATUS_REGISTER
@@ -42,7 +55,28 @@ _timer_exception_handler:
 	moveb	#0b00001000,TIMER_STATUS_REGISTER
 	moveal	_timer3_vector,%a0
 	jsr	%a0@
-4:	rte
+4:	btst	#4,TIMER_STATUS_REGISTER
+	beq	5f
+	moveb	#0b00010000,TIMER_STATUS_REGISTER
+	moveal	_timer4_vector,%a0
+	jsr	%a0@
+5:	btst	#5,TIMER_STATUS_REGISTER
+	beq	6f
+	moveb	#0b00100000,TIMER_STATUS_REGISTER
+	moveal	_timer5_vector,%a0
+	jsr	%a0@
+6:	btst	#6,TIMER_STATUS_REGISTER
+	beq	7f
+	moveb	#0b01000000,TIMER_STATUS_REGISTER
+	moveal	_timer6_vector,%a0
+	jsr	%a0@
+7:	btst	#7,TIMER_STATUS_REGISTER
+	beq	8f
+	moveb	#0b10000000,TIMER_STATUS_REGISTER
+	moveal	_timer7_vector,%a0
+	jsr	%a0@
+8:	movel   %sp@+,%a0				| restore A0
+	rte
 
 _timer_handler_dummy:
 	rts

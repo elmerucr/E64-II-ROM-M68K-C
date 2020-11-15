@@ -4,6 +4,7 @@
 #include "sids.h"
 #include "terminal.h"
 #include "timer.h"
+#include "cia.h"
 
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
@@ -18,8 +19,8 @@ void init()
 	update_vector_table();
 
 	// testing timer
-	timer_update_handler(TIMER3, increase_clear_color);
-	timer_turn_on(TIMER3, 480);
+	timer_update_handler(TIMER0, increase_clear_color);
+	timer_turn_on(TIMER0, 480);
 
 	// to enforce an address error exception
 	//__asm__ ("movew %d0,0x911");
@@ -32,6 +33,10 @@ void init()
 	VICV->horizontal_border_color = C64_BLUE;
 
 	BLITTER->clear_color = C64_BLUE;
+
+	CIA->keyboard_repeat_delay = 50;
+	CIA->keyboard_repeat_speed = 5;
+	CIA->control_register = 0b00000001;
 
 	terminal_init(
 		&main_terminal,

@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "vicv.h"
+#include "cia.h"
 
 void kmain()
 {
@@ -11,5 +12,8 @@ void kmain()
 
 	VICV->horizontal_border_color = C64_BLACK;
 
-	for (;;) {}
+	for (;;) {
+		if (CIA->status_register)
+			terminal_put_symbol(&main_terminal, CIA->key_next_ascii);
+	}
 }
