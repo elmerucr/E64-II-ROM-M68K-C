@@ -9,18 +9,10 @@
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
 
-struct terminal main_terminal;
-
-static void increase_clear_color() { BLITTER->clear_color++; }
-
 void init()
 {
 	move_sections_from_rom_to_kernel_ram();
 	update_vector_table();
-
-	// testing timer
-	timer_update_handler(TIMER0, increase_clear_color);
-	timer_turn_on(TIMER0, 480);
 
 	// to enforce an address error exception
 	//__asm__ ("movew %d0,0x911");
@@ -38,34 +30,39 @@ void init()
 	CIA->keyboard_repeat_speed = 5;
 	CIA->control_register = 0b00000001;
 
+	struct terminal main_terminal;
+	terminal_set_current(&main_terminal);
+
 	terminal_init(
-		&main_terminal,
-		BLIT_X__16_TILES | BLIT_Y___8_TILES,
+		BLIT_X__32_TILES | BLIT_Y__16_TILES,
 		128,
-		16,
+		36,
 		C64_LIGHTGREEN,
 		C64_GREEN
 	);
 
+	terminal_clear();
+
 	blitter_add_action((u32)&main_terminal.terminal_blit);
 
-	terminal_clear(&main_terminal);
+	terminal_put_symbol(' ');
+	terminal_put_symbol('*');
+	terminal_put_symbol('*');
+	terminal_put_symbol(' ');
+	terminal_put_symbol('e');
+	terminal_put_symbol('l');
+	terminal_put_symbol('m');
+	terminal_put_symbol('e');
+	terminal_put_symbol('r');
+	terminal_put_symbol('u');
+	terminal_put_symbol('c');
+	terminal_put_symbol('r');
+	terminal_put_symbol(' ');
+	terminal_put_symbol('*');
+	terminal_put_symbol('*');
 
-	terminal_put_symbol(&main_terminal, ' ');
-	terminal_put_symbol(&main_terminal, '*');
-	terminal_put_symbol(&main_terminal, '*');
-	terminal_put_symbol(&main_terminal, ' ');
-	terminal_put_symbol(&main_terminal, 'e');
-	terminal_put_symbol(&main_terminal, 'l');
-	terminal_put_symbol(&main_terminal, 'm');
-	terminal_put_symbol(&main_terminal, 'e');
-	terminal_put_symbol(&main_terminal, 'r');
-	terminal_put_symbol(&main_terminal, 'u');
-	terminal_put_symbol(&main_terminal, 'c');
-	terminal_put_symbol(&main_terminal, 'r');
-	terminal_put_symbol(&main_terminal, ' ');
-	terminal_put_symbol(&main_terminal, '*');
-	terminal_put_symbol(&main_terminal, '*');
+	timer_update_handler(TIMER0, terminal_timer_callback);
+	timer_turn_on(TIMER0, 3600);
 
 	/*
 	 * Enable all interrupts with level 2 and higher.

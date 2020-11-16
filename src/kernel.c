@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "vicv.h"
+#include "cia.h"
 
 void *heap_start;
 void *heap_end;
@@ -17,7 +18,6 @@ int update_vector_number(u8 vector_no, void *exception_handler)
 	 * pointer by itself. Hence, the type is void **
 	 */
 	void **vector_address = (void *)((u32)vector_no << 2);
-
 
 	// STORE CURRENT IPL, MOVE TO 7
 	*vector_address = exception_handler;
@@ -91,4 +91,25 @@ void *malloc(size_t n)
 	heap_end = (void *)((u32)heap_end + final_n);
 
 	return old_heap_end;
+}
+
+void kmain()
+{
+	u16 color = 0;
+
+	for (u32 i=0; i<2000; i++) {
+		VICV->horizontal_border_color = color++;
+	}
+
+	VICV->horizontal_border_color = C64_BLACK;
+
+	terminal_activate_cursor();
+
+	for (;;) {
+		if (CIA->status_register) {
+			terminal_deactivate_cursor();
+			terminal_put_symbol(CIA->key_next_ascii);
+			terminal_activate_cursor();
+		}
+	}
 }

@@ -28,6 +28,7 @@ u8 *memset(u8 *dest, u8 val, size_t count);
 extern void *heap_start;
 extern void *heap_end;
 extern void *character_ram;
+
 extern struct terminal main_terminal;
 
 void *malloc(size_t chunk);
