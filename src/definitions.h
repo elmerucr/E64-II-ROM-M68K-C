@@ -90,11 +90,24 @@
 #define C64_BROWN       0xF531
 #define C64_LIGHTRED	0xFB77
 #define C64_DARKGREY	0xF444
-#define C64_GREY	    0xF777
+#define C64_GREY	0xF777
 #define C64_LIGHTGREEN	0xFBFA
 #define C64_LIGHTBLUE	0xF67D
 #define C64_LIGHTGREY	0xFAAA
 
 #define CHAR_ROM        0xfb8000
+
+// ascii definitions
+#define	ASCII_NULL		0x00
+#define	ASCII_BACKSPACE		0x08
+#define	ASCII_LF		0x0A
+#define	ASCII_CR		0x0D
+#define	ASCII_CURSOR_DOWN	0x11
+#define	ASCII_REVERSE_ON	0x12
+#define	ASCII_CURSOR_RIGHT	0x1D
+#define	ASCII_SPACE		0x20
+#define	ASCII_CURSOR_UP		0x91
+#define	ASCII_REVERSE_OFF	0x92
+#define	ASCII_CURSOR_LEFT	0x9D
 
 #endif

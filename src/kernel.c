@@ -19,9 +19,12 @@ int update_vector_number(u8 vector_no, void *exception_handler)
 	 */
 	void **vector_address = (void *)((u32)vector_no << 2);
 
-	// STORE CURRENT IPL, MOVE TO 7
+
+	disable_interrupts();
+
 	*vector_address = exception_handler;
-	// RESTORE IPL
+
+	restore_interrupts();
 
 	return 0;
 }
@@ -53,13 +56,13 @@ void build_character_ram(u8 *source, u16 *dest)
 	}
 }
 
-// u8   get_interrupt_priority_level()
+// u8 get_interrupt_priority_level()
 // {
 // 	u16 status_register;
 
 // 	__asm__ __volatile__ (
-// 		"move.w	%sr,%%d0	\n\t"
-// 		"move.w %%d0,%0"
+// 		"movew %%sr,%%d0	\n\t"
+// 		"movew %%d0,%0"
 // 		: "=g" (status_register)	/* outputs */
 // 	);
 
@@ -95,20 +98,29 @@ void *malloc(size_t n)
 
 void kmain()
 {
-	u16 color = 0;
-
-	for (u32 i=0; i<2000; i++) {
-		VICV->horizontal_border_color = color++;
-	}
-
-	VICV->horizontal_border_color = C64_BLACK;
-
 	terminal_activate_cursor();
 
 	for (;;) {
 		if (CIA->status_register) {
 			terminal_deactivate_cursor();
-			terminal_put_symbol(CIA->key_next_ascii);
+			u8 key_value = CIA->key_next_ascii;
+			switch (key_value) {
+			case ASCII_CURSOR_LEFT:
+				terminal_cursor_left();
+				break;
+			case ASCII_CURSOR_RIGHT:
+				terminal_cursor_right();
+				break;
+			case ASCII_CURSOR_UP:
+				terminal_cursor_up();
+				break;
+			case ASCII_CURSOR_DOWN:
+				terminal_cursor_down();
+				break;
+			default:
+				terminal_put_symbol(key_value);
+				break;
+			}
 			terminal_activate_cursor();
 		}
 	}

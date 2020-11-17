@@ -22,7 +22,7 @@ void init()
 	blitter_init();
 
 	VICV->horizontal_border_size = 16;
-	VICV->horizontal_border_color = C64_BLUE;
+	VICV->horizontal_border_color = C64_BLACK;
 
 	BLITTER->clear_color = C64_BLUE;
 
@@ -35,10 +35,10 @@ void init()
 
 	terminal_init(
 		BLIT_X__32_TILES | BLIT_Y__16_TILES,
-		128,
+		29,
 		36,
 		C64_LIGHTGREEN,
-		C64_GREEN
+		0x86a5
 	);
 
 	terminal_clear();

@@ -7,6 +7,8 @@
 
 struct terminal {
 	struct blit terminal_blit;
+	u8  number_of_columns;
+	u8  number_of_rows;
 	u16 total_number_of_tiles;
 
 	u16	cursor_position;
@@ -30,6 +32,11 @@ void terminal_put_symbol(char value);
 
 void terminal_activate_cursor();
 void terminal_deactivate_cursor();
+
+void terminal_cursor_left();
+void terminal_cursor_right();
+void terminal_cursor_up();
+void terminal_cursor_down();
 
 void terminal_timer_callback();
 

@@ -13,6 +13,8 @@ void timer_turn_off(enum timer_number this_timer)
 
 void timer_update_handler(enum timer_number this_timer, void *callback_function)
 {
+	disable_interrupts();
+
 	switch (this_timer) {
 	case TIMER0:
 		timer0_vector = callback_function;
@@ -41,4 +43,6 @@ void timer_update_handler(enum timer_number this_timer, void *callback_function)
 	default:
 		break;
 	}
+
+	restore_interrupts();
 }

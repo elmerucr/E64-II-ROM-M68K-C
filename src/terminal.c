@@ -22,9 +22,12 @@ void terminal_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 	size_in_tiles_log2 &= 0b01110111;
 	current_terminal->terminal_blit.size_in_tiles_log2 = size_in_tiles_log2;
 
+	current_terminal->number_of_columns = (0b1 << (size_in_tiles_log2 & 0b111));
+	current_terminal->number_of_rows = (0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
+
 	current_terminal->total_number_of_tiles =
-		(0b1 << (size_in_tiles_log2 & 0b111)) *
-		(0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
+		current_terminal->number_of_columns *
+		current_terminal->number_of_rows;
 
 	current_terminal->terminal_blit.x = x_pos;
 	current_terminal->terminal_blit.y = y_pos;
@@ -83,6 +86,36 @@ void terminal_deactivate_cursor()
 	current_terminal->cursor_blink = false;
 	current_terminal->terminal_blit.tile_data[current_terminal->cursor_position] =
 		current_terminal->cursor_original_char;
+}
+
+void terminal_cursor_left()
+{
+	current_terminal->cursor_position--;
+	current_terminal->cursor_position &=
+		(current_terminal->total_number_of_tiles - 1);
+}
+
+void terminal_cursor_right()
+{
+	current_terminal->cursor_position++;
+	current_terminal->cursor_position &=
+		(current_terminal->total_number_of_tiles - 1);
+}
+
+void terminal_cursor_up()
+{
+	current_terminal->cursor_position -=
+		current_terminal->number_of_columns;
+	current_terminal->cursor_position &=
+		(current_terminal->total_number_of_tiles - 1);
+}
+
+void terminal_cursor_down()
+{
+	current_terminal->cursor_position +=
+		current_terminal->number_of_columns;
+	current_terminal->cursor_position &=
+		(current_terminal->total_number_of_tiles - 1);
 }
 
 void terminal_timer_callback()

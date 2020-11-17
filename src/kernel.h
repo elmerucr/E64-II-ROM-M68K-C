@@ -36,8 +36,10 @@ void *malloc(size_t chunk);
 void build_character_ram(u8 *source, u16 *dest);
 int  update_vector_number(u8 vector_no, void *exception_handler);
 
-u8   get_interrupt_priority_level();
+//u8   get_interrupt_priority_level();
 void set_interrupt_priority_level(u16 value);
+void disable_interrupts();
+void restore_interrupts();
 
 void address_error_exception_handler();
 
