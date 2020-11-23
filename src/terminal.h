@@ -21,6 +21,8 @@ struct terminal {
 	u16 current_foreground_color;
 };
 
+extern struct terminal *current_terminal;
+
 void terminal_set_current(struct terminal *local);
 
 void terminal_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,

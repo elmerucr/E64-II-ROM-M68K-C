@@ -9,6 +9,13 @@
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
 
+void increase_xpos_terminal()
+{
+	current_terminal->terminal_blit.x++;
+	if (current_terminal->terminal_blit.x == 512)
+		current_terminal->terminal_blit.x = -256;
+}
+
 void init()
 {
 	move_sections_from_rom_to_kernel_ram();
@@ -63,6 +70,9 @@ void init()
 
 	timer_update_handler(TIMER0, terminal_timer_callback);
 	timer_turn_on(TIMER0, 3600);
+
+	timer_update_handler(TIMER1, increase_xpos_terminal);
+	timer_turn_on(TIMER1, 4000);
 
 	/*
 	 * Enable all interrupts with level 2 and higher.
