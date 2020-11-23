@@ -9,11 +9,18 @@
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
 
-void increase_xpos_terminal()
+void move_terminal()
 {
-	current_terminal->terminal_blit.x++;
-	if (current_terminal->terminal_blit.x == 512)
-		current_terminal->terminal_blit.x = -256;
+	static int dx=1;
+	static int dy=1;
+	current_terminal->terminal_blit.x += dx;
+	current_terminal->terminal_blit.y += dy;
+	if (current_terminal->terminal_blit.x == 0 ||
+	    current_terminal->terminal_blit.x == 256)
+		dx = -dx;
+	if (current_terminal->terminal_blit.y == 16 ||
+	    current_terminal->terminal_blit.y == 144)
+		dy = -dy;
 }
 
 void init()
@@ -52,27 +59,13 @@ void init()
 
 	blitter_add_action((u32)&main_terminal.terminal_blit);
 
-	terminal_put_symbol(' ');
-	terminal_put_symbol('*');
-	terminal_put_symbol('*');
-	terminal_put_symbol(' ');
-	terminal_put_symbol('e');
-	terminal_put_symbol('l');
-	terminal_put_symbol('m');
-	terminal_put_symbol('e');
-	terminal_put_symbol('r');
-	terminal_put_symbol('u');
-	terminal_put_symbol('c');
-	terminal_put_symbol('r');
-	terminal_put_symbol(' ');
-	terminal_put_symbol('*');
-	terminal_put_symbol('*');
+	terminal_puts("** E64-II computer system **\n\nready.\n");
 
 	timer_update_handler(TIMER0, terminal_timer_callback);
 	timer_turn_on(TIMER0, 3600);
 
-	timer_update_handler(TIMER1, increase_xpos_terminal);
-	timer_turn_on(TIMER1, 4000);
+	timer_update_handler(TIMER1, move_terminal);
+	timer_turn_on(TIMER1, 3600);
 
 	/*
 	 * Enable all interrupts with level 2 and higher.

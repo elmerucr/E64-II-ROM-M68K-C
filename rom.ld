@@ -11,6 +11,7 @@ SECTIONS
     {
         *(.text) ;
         *(.rodata) ;
+	*(.rodata.str1.1) ;
 		. = ALIGN(0x10) ;
 		_etext = . ;
     }

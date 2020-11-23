@@ -62,7 +62,7 @@ void terminal_clear()
 	}
 }
 
-void terminal_put_symbol(char symbol)
+void terminal_putsymbol(char symbol)
 {
 	current_terminal->terminal_blit.tile_data[current_terminal->cursor_position] =
 		symbol;
@@ -71,6 +71,38 @@ void terminal_put_symbol(char symbol)
 	current_terminal->cursor_position++;
 	current_terminal->cursor_position &=
 		(current_terminal->total_number_of_tiles - 1);
+}
+
+void terminal_putchar(char value)
+{
+	switch (value) {
+	case '\r':
+		current_terminal->cursor_position -=
+			current_terminal->cursor_position %
+				current_terminal->number_of_columns;
+		break;
+	case '\n':
+		terminal_putchar('\r');
+		if ((current_terminal->cursor_position / current_terminal->number_of_columns) ==
+		    (current_terminal->number_of_rows - 1)) {
+			    terminal_add_bottom_line();
+		} else {
+			current_terminal->cursor_position +=
+				current_terminal->number_of_columns;
+		}
+		break;
+	default:
+		terminal_putsymbol(value);
+		break;
+	}
+}
+
+void terminal_puts(char *text)
+{
+	while (*text) {
+		terminal_putchar(*text);
+		text++;
+	}
 }
 
 void terminal_activate_cursor()
@@ -126,5 +158,17 @@ void terminal_timer_callback()
 			current_terminal->cursor_countdown += current_terminal->cursor_interval;
 		}
 		current_terminal->cursor_countdown--;
+	}
+}
+
+void terminal_add_bottom_line()
+{
+	for (size_t i=0; i<(current_terminal->total_number_of_tiles - current_terminal->number_of_columns); i++) {
+		current_terminal->terminal_blit.tile_data[i] =
+			current_terminal->terminal_blit.tile_data[i + current_terminal->number_of_columns];
+		current_terminal->terminal_blit.tile_color_data[i] =
+			current_terminal->terminal_blit.tile_color_data[i + current_terminal->number_of_columns];
+		current_terminal->terminal_blit.tile_background_color_data[i] =
+			current_terminal->terminal_blit.tile_background_color_data[i + current_terminal->number_of_columns];
 	}
 }

@@ -30,7 +30,9 @@ void terminal_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 
 void terminal_clear();
 
-void terminal_put_symbol(char value);
+void terminal_putsymbol(char symbol);
+void terminal_putchar(char value);
+void terminal_puts(char *text);
 
 void terminal_activate_cursor();
 void terminal_deactivate_cursor();
@@ -39,6 +41,8 @@ void terminal_cursor_left();
 void terminal_cursor_right();
 void terminal_cursor_up();
 void terminal_cursor_down();
+
+void terminal_add_bottom_line();
 
 void terminal_timer_callback();
 

@@ -118,7 +118,7 @@ void kmain()
 				terminal_cursor_down();
 				break;
 			default:
-				terminal_put_symbol(key_value);
+				terminal_putchar(key_value);
 				break;
 			}
 			terminal_activate_cursor();
