@@ -6,10 +6,10 @@
 #include <stdbool.h>
 
 struct terminal {
-	struct blit terminal_blit;
+	struct blit tty_blit;
 	u8  columns;
 	u8  number_of_rows;
-	u16 total_number_of_tiles;
+	u16 number_of_tiles;
 
 	u16	cursor_position;
 	u8	cursor_interval;
@@ -19,9 +19,10 @@ struct terminal {
 	bool	cursor_blink;		// current state
 
 	u16 current_foreground_color;
+	u16 current_background_color;
 };
 
-extern struct terminal *console;
+extern struct terminal *tty0;
 
 void terminal_set_current(struct terminal *local);
 
@@ -41,6 +42,7 @@ void terminal_cursor_left();
 void terminal_cursor_right();
 void terminal_cursor_up();
 void terminal_cursor_down();
+void terminal_backspace();
 
 void terminal_add_bottom_line();
 

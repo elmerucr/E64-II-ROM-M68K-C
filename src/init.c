@@ -13,13 +13,13 @@ void move_terminal()
 {
 	static int dx=1;
 	static int dy=1;
-	console->terminal_blit.x += dx;
-	console->terminal_blit.y += dy;
-	if (console->terminal_blit.x == 0 ||
-	    console->terminal_blit.x == 256)
+	tty0->tty_blit.x += dx;
+	tty0->tty_blit.y += dy;
+	if (tty0->tty_blit.x == 0 ||
+	    tty0->tty_blit.x == 256)
 		dx = -dx;
-	if (console->terminal_blit.y == 16 ||
-	    console->terminal_blit.y == 144)
+	if (tty0->tty_blit.y == 16 ||
+	    tty0->tty_blit.y == 208)
 		dy = -dy;
 }
 
@@ -48,24 +48,24 @@ void init()
 	terminal_set_current(&main_terminal);
 
 	terminal_init(
-		BLIT_X__32_TILES | BLIT_Y__16_TILES,
+		BLIT_X__32_TILES | BLIT_Y___8_TILES,
 		29,
 		36,
-		C64_LIGHTGREEN,
-		0x86a5
+		0x8bfa, //C64_LIGHTGREEN,
+		0x46a5
 	);
 
 	terminal_clear();
 
-	blitter_add_action((u32)&main_terminal.terminal_blit);
+	blitter_add_action((u32)&main_terminal.tty_blit);
 
-	terminal_puts("** E64-II computer system **\n\nready.\n");
+	terminal_puts(" *** E64-II computer system ***\n\nready.\n");
 
 	timer_update_handler(TIMER0, terminal_timer_callback);
 	timer_turn_on(TIMER0, 3600);
 
 	timer_update_handler(TIMER1, move_terminal);
-	timer_turn_on(TIMER1, 3600);
+	timer_turn_on(TIMER1, 1800);
 
 	/*
 	 * Enable all interrupts with level 2 and higher.

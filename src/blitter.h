@@ -54,9 +54,9 @@ struct __attribute__((packed)) blit {
 	u16	foreground_color;
 	u16	background_color;
 	u16	*pixel_data;
-	u8	*tile_data;
-	u16	*tile_color_data;
-	u16	*tile_background_color_data;
+	u8	*tiles;
+	u16	*tiles_color;
+	u16	*tiles_background_color;
 	void	*user_data;
 };
 

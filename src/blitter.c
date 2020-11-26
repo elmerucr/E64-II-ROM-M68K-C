@@ -35,9 +35,9 @@ void blitter_init()
 	available += 2;
 
 	default_screen.pixel_data = (u16 *)character_ram;
-	default_screen.tile_data = malloc(0x800);
-	default_screen.tile_color_data = malloc(0x800 * sizeof(u16));
-	default_screen.tile_background_color_data = malloc(0x800 * sizeof(u16));
+	default_screen.tiles = malloc(0x800);
+	default_screen.tiles_color = malloc(0x800 * sizeof(u16));
+	default_screen.tiles_background_color = malloc(0x800 * sizeof(u16));
 }
 
 void blitter_add_action(u32 action)

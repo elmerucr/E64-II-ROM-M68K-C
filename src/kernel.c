@@ -117,6 +117,9 @@ void kmain()
 			case ASCII_CURSOR_DOWN:
 				terminal_cursor_down();
 				break;
+			case ASCII_BACKSPACE:
+				terminal_backspace();
+				break;
 			default:
 				terminal_putchar(key_value);
 				break;
