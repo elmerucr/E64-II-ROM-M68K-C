@@ -13,13 +13,13 @@ void move_terminal()
 {
 	static int dx=1;
 	static int dy=1;
-	current_terminal->terminal_blit.x += dx;
-	current_terminal->terminal_blit.y += dy;
-	if (current_terminal->terminal_blit.x == 0 ||
-	    current_terminal->terminal_blit.x == 256)
+	console->terminal_blit.x += dx;
+	console->terminal_blit.y += dy;
+	if (console->terminal_blit.x == 0 ||
+	    console->terminal_blit.x == 256)
 		dx = -dx;
-	if (current_terminal->terminal_blit.y == 16 ||
-	    current_terminal->terminal_blit.y == 144)
+	if (console->terminal_blit.y == 16 ||
+	    console->terminal_blit.y == 144)
 		dy = -dy;
 }
 

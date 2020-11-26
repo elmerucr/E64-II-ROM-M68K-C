@@ -7,7 +7,7 @@
 
 struct terminal {
 	struct blit terminal_blit;
-	u8  number_of_columns;
+	u8  columns;
 	u8  number_of_rows;
 	u16 total_number_of_tiles;
 
@@ -21,7 +21,7 @@ struct terminal {
 	u16 current_foreground_color;
 };
 
-extern struct terminal *current_terminal;
+extern struct terminal *console;
 
 void terminal_set_current(struct terminal *local);
 

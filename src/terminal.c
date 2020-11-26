@@ -1,94 +1,96 @@
 #include "terminal.h"
 #include "kernel.h"
 
-struct terminal *current_terminal;
+struct terminal *console;
 
 void terminal_set_current(struct terminal *local)
 {
-	current_terminal = local;
+	console = local;
 }
 
 void terminal_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 		   u16 foreground_color, u16 background_color)
 {
-	current_terminal->terminal_blit.flags_0 =
+	console->terminal_blit.flags_0 =
 		BLIT_TILE_MODE		|
 		BLIT_BACKGROUND_ON	|
 		BLIT_SIMPLE_COLOR	|
 		BLIT_COLOR_PER_TILE_ON;
 
-	current_terminal->terminal_blit.flags_1 = 0x00;
+	console->terminal_blit.flags_1 = 0x00;
 
 	size_in_tiles_log2 &= 0b01110111;
-	current_terminal->terminal_blit.size_in_tiles_log2 = size_in_tiles_log2;
+	console->terminal_blit.size_in_tiles_log2 = size_in_tiles_log2;
 
-	current_terminal->number_of_columns = (0b1 << (size_in_tiles_log2 & 0b111));
-	current_terminal->number_of_rows = (0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
+	console->columns = (0b1 << (size_in_tiles_log2 & 0b111));
+	console->number_of_rows = (0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
 
-	current_terminal->total_number_of_tiles =
-		current_terminal->number_of_columns *
-		current_terminal->number_of_rows;
+	console->total_number_of_tiles =
+		console->columns *
+		console->number_of_rows;
 
-	current_terminal->terminal_blit.x = x_pos;
-	current_terminal->terminal_blit.y = y_pos;
+	console->terminal_blit.x = x_pos;
+	console->terminal_blit.y = y_pos;
 
-	current_terminal->terminal_blit.foreground_color = foreground_color;
-	current_terminal->terminal_blit.background_color = background_color;
+	console->terminal_blit.foreground_color = foreground_color;
+	console->terminal_blit.background_color = background_color;
 
-	current_terminal->terminal_blit.pixel_data = (u16 *)character_ram;
+	console->terminal_blit.pixel_data = (u16 *)character_ram;
 
-	current_terminal->terminal_blit.tile_data =
-		malloc(current_terminal->total_number_of_tiles * sizeof(u8));
-	current_terminal->terminal_blit.tile_color_data =
-		malloc(current_terminal->total_number_of_tiles * sizeof(u16));
-	current_terminal->terminal_blit.tile_background_color_data =
-		malloc(current_terminal->total_number_of_tiles * sizeof(u16));
+	console->terminal_blit.tile_data =
+		malloc(console->total_number_of_tiles * sizeof(u8));
+	console->terminal_blit.tile_color_data =
+		malloc(console->total_number_of_tiles * sizeof(u16));
+	console->terminal_blit.tile_background_color_data =
+		malloc(console->total_number_of_tiles * sizeof(u16));
 
-	current_terminal->cursor_position = 0;
-	current_terminal->cursor_interval = 20; 	// 0.33s (if timer @ 60Hz)
-	current_terminal->cursor_countdown = 0;
-	current_terminal->cursor_blink = false;
-	current_terminal->current_foreground_color = foreground_color;
+	console->cursor_position = 0;
+	console->cursor_interval = 20; 	// 0.33s (if timer @ 60Hz)
+	console->cursor_countdown = 0;
+	console->cursor_blink = false;
+	console->current_foreground_color = foreground_color;
 }
 
 void terminal_clear()
 {
-	for (size_t i=0; i < (current_terminal->total_number_of_tiles); i++) {
-		current_terminal->terminal_blit.tile_data[i] = ' ';
-		current_terminal->terminal_blit.tile_color_data[i] =
-			current_terminal->terminal_blit.foreground_color;
-		current_terminal->terminal_blit.tile_background_color_data[i] =
-			current_terminal->terminal_blit.background_color;
+	for (size_t i=0; i < (console->total_number_of_tiles); i++) {
+		console->terminal_blit.tile_data[i] = ' ';
+		console->terminal_blit.tile_color_data[i] =
+			console->terminal_blit.foreground_color;
+		console->terminal_blit.tile_background_color_data[i] =
+			console->terminal_blit.background_color;
 	}
 }
 
 void terminal_putsymbol(char symbol)
 {
-	current_terminal->terminal_blit.tile_data[current_terminal->cursor_position] =
+	console->terminal_blit.tile_data[console->cursor_position] =
 		symbol;
-	current_terminal->terminal_blit.tile_color_data[current_terminal->cursor_position] =
-		current_terminal->current_foreground_color;
-	current_terminal->cursor_position++;
-	current_terminal->cursor_position &=
-		(current_terminal->total_number_of_tiles - 1);
+	console->terminal_blit.tile_color_data[console->cursor_position] =
+		console->current_foreground_color;
+	console->cursor_position++;
+	console->cursor_position &=
+		(console->total_number_of_tiles - 1);
 }
 
 void terminal_putchar(char value)
 {
 	switch (value) {
 	case '\r':
-		current_terminal->cursor_position -=
-			current_terminal->cursor_position %
-				current_terminal->number_of_columns;
+		console->cursor_position -=
+			console->cursor_position %
+				console->columns;
 		break;
 	case '\n':
-		terminal_putchar('\r');
-		if ((current_terminal->cursor_position / current_terminal->number_of_columns) ==
-		    (current_terminal->number_of_rows - 1)) {
+		console->cursor_position -=
+			console->cursor_position %
+				console->columns;
+		if ((console->cursor_position / console->columns) ==
+		    (console->number_of_rows - 1)) {
 			    terminal_add_bottom_line();
 		} else {
-			current_terminal->cursor_position +=
-				current_terminal->number_of_columns;
+			console->cursor_position +=
+				console->columns;
 		}
 		break;
 	default:
@@ -107,68 +109,72 @@ void terminal_puts(char *text)
 
 void terminal_activate_cursor()
 {
-	current_terminal->cursor_original_char =
-		current_terminal->terminal_blit.tile_data[current_terminal->cursor_position];
-	current_terminal->cursor_blink = true;
-	current_terminal->cursor_countdown = 0;
+	console->cursor_original_char =
+		console->terminal_blit.tile_data[console->cursor_position];
+	console->cursor_blink = true;
+	console->cursor_countdown = 0;
 }
 
 void terminal_deactivate_cursor()
 {
-	current_terminal->cursor_blink = false;
-	current_terminal->terminal_blit.tile_data[current_terminal->cursor_position] =
-		current_terminal->cursor_original_char;
+	console->cursor_blink = false;
+	console->terminal_blit.tile_data[console->cursor_position] =
+		console->cursor_original_char;
 }
 
 void terminal_cursor_left()
 {
-	current_terminal->cursor_position--;
-	current_terminal->cursor_position &=
-		(current_terminal->total_number_of_tiles - 1);
+	console->cursor_position--;
+	console->cursor_position &=
+		(console->total_number_of_tiles - 1);
 }
 
 void terminal_cursor_right()
 {
-	current_terminal->cursor_position++;
-	current_terminal->cursor_position &=
-		(current_terminal->total_number_of_tiles - 1);
+	console->cursor_position++;
+	console->cursor_position &=
+		(console->total_number_of_tiles - 1);
 }
 
 void terminal_cursor_up()
 {
-	current_terminal->cursor_position -=
-		current_terminal->number_of_columns;
-	current_terminal->cursor_position &=
-		(current_terminal->total_number_of_tiles - 1);
+	console->cursor_position -=
+		console->columns;
+	console->cursor_position &=
+		(console->total_number_of_tiles - 1);
 }
 
 void terminal_cursor_down()
 {
-	current_terminal->cursor_position +=
-		current_terminal->number_of_columns;
-	current_terminal->cursor_position &=
-		(current_terminal->total_number_of_tiles - 1);
+	console->cursor_position +=
+		console->columns;
+	console->cursor_position &=
+		(console->total_number_of_tiles - 1);
 }
 
 void terminal_timer_callback()
 {
-	if (current_terminal->cursor_blink == true) {
-		if (current_terminal->cursor_countdown == 0) {
-			current_terminal->terminal_blit.tile_data[current_terminal->cursor_position] ^= 0x80;
-			current_terminal->cursor_countdown += current_terminal->cursor_interval;
+	if (console->cursor_blink == true) {
+		if (console->cursor_countdown == 0) {
+			console->terminal_blit.tile_data[console->cursor_position] ^= 0x80;
+			console->cursor_countdown += console->cursor_interval;
 		}
-		current_terminal->cursor_countdown--;
+		console->cursor_countdown--;
 	}
 }
 
 void terminal_add_bottom_line()
 {
-	for (size_t i=0; i<(current_terminal->total_number_of_tiles - current_terminal->number_of_columns); i++) {
-		current_terminal->terminal_blit.tile_data[i] =
-			current_terminal->terminal_blit.tile_data[i + current_terminal->number_of_columns];
-		current_terminal->terminal_blit.tile_color_data[i] =
-			current_terminal->terminal_blit.tile_color_data[i + current_terminal->number_of_columns];
-		current_terminal->terminal_blit.tile_background_color_data[i] =
-			current_terminal->terminal_blit.tile_background_color_data[i + current_terminal->number_of_columns];
+	u8 columns = console->columns;
+
+	for (size_t i=0; i<((console->total_number_of_tiles) - columns); i++) {
+		console->terminal_blit.tile_data[i] =
+			console->terminal_blit.tile_data[i + columns];
+		console->terminal_blit.tile_color_data[i] =
+			console->terminal_blit.tile_color_data[i + console->columns];
+		console->terminal_blit.tile_background_color_data[i] =
+			console->terminal_blit.tile_background_color_data[i + console->columns];
 	}
+	for (size_t i=console->total_number_of_tiles - console->columns; i<console->total_number_of_tiles; i++)
+		console->terminal_blit.tile_data[i] = ' ';
 }

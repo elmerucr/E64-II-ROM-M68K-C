@@ -34,7 +34,7 @@ _timer7_vector:
 	.text
 
 _timer_exception_handler:
-	movel	%a0,%sp@-				| save A0
+	moveml	%a0-%a2/%d0-%d2,%sp@-			| save regs
 	btst	#0,TIMER_STATUS_REGISTER
 	beq	1f
 	moveb	#0b00000001,TIMER_STATUS_REGISTER
@@ -75,7 +75,7 @@ _timer_exception_handler:
 	moveb	#0b10000000,TIMER_STATUS_REGISTER
 	moveal	_timer7_vector,%a0
 	jsr	%a0@
-8:	movel   %sp@+,%a0				| restore A0
+8:	moveml   %sp@+,%a0-%a2/%d0-%d2			| restore regs
 	rte
 
 _timer_handler_dummy:
