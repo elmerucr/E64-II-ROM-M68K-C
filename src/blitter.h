@@ -61,7 +61,7 @@ struct __attribute__((packed)) blit {
 };
 
 void blitter_init();
-void blitter_add_action(u32 action);
+void blitter_add_action(void *action);
 
 extern void **blitter_list;
 

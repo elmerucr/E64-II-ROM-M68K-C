@@ -2,34 +2,17 @@
 #include "blitter.h"
 #include "vicv.h"
 #include "sids.h"
-#include "terminal.h"
+#include "tty.h"
 #include "timer.h"
 #include "cia.h"
 
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
 
-void move_terminal()
-{
-	static int dx=1;
-	static int dy=1;
-	tty0->tty_blit.x += dx;
-	tty0->tty_blit.y += dy;
-	if (tty0->tty_blit.x == 0 ||
-	    tty0->tty_blit.x == 256)
-		dx = -dx;
-	if (tty0->tty_blit.y == 16 ||
-	    tty0->tty_blit.y == 208)
-		dy = -dy;
-}
-
 void init()
 {
 	move_sections_from_rom_to_kernel_ram();
 	update_vector_table();
-
-	// to enforce an address error exception
-	//__asm__ ("movew %d0,0x911");
 
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
@@ -44,28 +27,23 @@ void init()
 	CIA->keyboard_repeat_speed = 5;
 	CIA->control_register = 0b00000001;
 
-	struct terminal main_terminal;
-	terminal_set_current(&main_terminal);
+	tty_set_current(&tty0);
 
-	terminal_init(
-		BLIT_X__32_TILES | BLIT_Y___8_TILES,
-		29,
-		36,
-		0x8bfa, //C64_LIGHTGREEN,
-		0x46a5
+	tty_init(
+		BLIT_X__64_TILES | BLIT_Y__32_TILES,
+		0,
+		16,
+		C64_LIGHTBLUE,
+		0x0000
 	);
 
-	terminal_clear();
+	tty_clear();
+	tty_puts("E64-II Computer System\n\nready.\n");
 
-	blitter_add_action((u32)&main_terminal.tty_blit);
+	blitter_add_action(&tty0.screen_blit);
 
-	terminal_puts(" *** E64-II computer system ***\n\nready.\n");
-
-	timer_update_handler(TIMER0, terminal_timer_callback);
+	timer_update_handler(TIMER0, tty_timer_callback);
 	timer_turn_on(TIMER0, 3600);
-
-	timer_update_handler(TIMER1, move_terminal);
-	timer_turn_on(TIMER1, 1800);
 
 	/*
 	 * Enable all interrupts with level 2 and higher.

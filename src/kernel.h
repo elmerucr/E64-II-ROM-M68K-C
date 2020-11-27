@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "definitions.h"
-#include "terminal.h"
+#include "tty.h"
 
 #ifndef KERNEL_H
 #define KERNEL_H
@@ -29,7 +29,7 @@ extern void *heap_start;
 extern void *heap_end;
 extern void *character_ram;
 
-extern struct terminal main_terminal;
+extern struct tty tty0;
 
 void *malloc(size_t chunk);
 

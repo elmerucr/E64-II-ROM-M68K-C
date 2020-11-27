@@ -6,6 +6,8 @@ void *heap_start;
 void *heap_end;
 void *character_ram;
 
+struct tty tty0;
+
 int update_vector_number(u8 vector_no, void *exception_handler)
 {
 	if ((vector_no < 2))
@@ -98,33 +100,33 @@ void *malloc(size_t n)
 
 void kmain()
 {
-	terminal_activate_cursor();
+	tty_activate_cursor();
 
 	for (;;) {
 		if (CIA->status_register) {
-			terminal_deactivate_cursor();
+			tty_deactivate_cursor();
 			u8 key_value = CIA->key_next_ascii;
 			switch (key_value) {
 			case ASCII_CURSOR_LEFT:
-				terminal_cursor_left();
+				tty_cursor_left();
 				break;
 			case ASCII_CURSOR_RIGHT:
-				terminal_cursor_right();
+				tty_cursor_right();
 				break;
 			case ASCII_CURSOR_UP:
-				terminal_cursor_up();
+				tty_cursor_up();
 				break;
 			case ASCII_CURSOR_DOWN:
-				terminal_cursor_down();
+				tty_cursor_down();
 				break;
 			case ASCII_BACKSPACE:
-				terminal_backspace();
+				tty_backspace();
 				break;
 			default:
-				terminal_putchar(key_value);
+				tty_putchar(key_value);
 				break;
 			}
-			terminal_activate_cursor();
+			tty_activate_cursor();
 		}
 	}
 }
