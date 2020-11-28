@@ -5,6 +5,7 @@
 #include "tty.h"
 #include "timer.h"
 #include "cia.h"
+#include "basic.h"
 
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
@@ -26,6 +27,8 @@ void init()
 	CIA->keyboard_repeat_delay = 50;
 	CIA->keyboard_repeat_speed = 5;
 	CIA->control_register = 0b00000001;
+
+	basic_cold_start();
 
 	tty_set_current(&tty0);
 
@@ -69,12 +72,14 @@ void move_sections_from_rom_to_kernel_ram()
 	/*
 	 * ROM has .data section at end of .text, copy it to the right location
 	 */
-	while (dst < &edata) *dst++ = *src++;
+	while (dst < &edata)
+		*dst++ = *src++;
 
 	/*
 	 * zero out the .bss section
 	 */
-	for (dst = &bss; dst< &bssend; dst++) *dst = 0x00;
+	for (dst = &bss; dst< &bssend; dst++)
+		*dst = 0x00;
 
 	/*
 	 * Initialize the heap pointers. heap_end points to the currently
@@ -87,6 +92,6 @@ void move_sections_from_rom_to_kernel_ram()
 void update_vector_table()
 {
 	update_vector_number(3,  address_error_exception_handler);
-	update_vector_number(26, vicv_vblank_exception_handler);		// irq 2
+	update_vector_number(26, vicv_vblank_exception_handler);	// irq 2
 	update_vector_number(28, timer_exception_handler);		// irq 4
 }

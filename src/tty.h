@@ -20,6 +20,8 @@ struct tty {
 
 	u16 current_foreground_color;
 	u16 current_background_color;
+
+	char	*command_buffer;
 };
 
 void tty_set_current(struct tty *local);
@@ -41,6 +43,7 @@ void tty_cursor_right();
 void tty_cursor_up();
 void tty_cursor_down();
 void tty_backspace();
+void tty_enter();
 
 void tty_add_bottom_line();
 

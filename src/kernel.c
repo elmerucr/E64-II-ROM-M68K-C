@@ -91,7 +91,7 @@ void *malloc(size_t n)
 {
 	void *old_heap_end = heap_end;
 
-	size_t final_n = (n & 0b1) ? n++ : n;
+	size_t final_n = (n & 0b1) ? n + 1 : n;
 
 	heap_end = (void *)((u32)heap_end + final_n);
 
@@ -121,6 +121,9 @@ void kmain()
 				break;
 			case ASCII_BACKSPACE:
 				tty_backspace();
+				break;
+			case ASCII_LF:
+				tty_enter();
 				break;
 			default:
 				tty_putchar(key_value);

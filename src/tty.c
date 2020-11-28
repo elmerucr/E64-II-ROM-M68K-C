@@ -1,5 +1,6 @@
 #include "tty.h"
 #include "kernel.h"
+#include "cia.h"
 
 struct tty *tty_current;
 
@@ -23,7 +24,11 @@ void tty_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 	tty_current->screen_blit.size_in_tiles_log2 = size_in_tiles_log2;
 
 	tty_current->columns = (0b1 << (size_in_tiles_log2 & 0b111));
-	tty_current->number_of_rows = (0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
+	tty_current->number_of_rows =
+		(0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
+
+	tty_current->command_buffer =
+		malloc((tty_current->columns + 1) * sizeof(char));
 
 	tty_current->number_of_tiles =
 		tty_current->columns *
@@ -203,4 +208,24 @@ void tty_add_bottom_line()
 	}
 	for (size_t i=tty_current->number_of_tiles - tty_current->columns; i<tty_current->number_of_tiles; i++)
 		tty_current->screen_blit.tiles[i] = ' ';
+}
+
+void tty_enter()
+{
+	// NEEDS WORK, INEFFICIENT AND CAN BE FASTER
+	u16 start_of_line = tty_current->cursor_position -
+		(tty_current->cursor_position % tty_current->columns);
+	for (size_t i = 0; i < tty_current->columns; i++) {
+		tty_current->command_buffer[i] =
+			tty_current->screen_blit.tiles[start_of_line + i];
+	}
+
+	size_t i = tty_current->columns - 1;
+	while (tty_current->command_buffer[i] == ' ')
+		i--;
+	tty_current->command_buffer[i + 1] = 0;
+
+	tty_putchar('\n');
+	tty_puts(tty_current->command_buffer);
+	tty_puts("<<END>>\n");
 }
