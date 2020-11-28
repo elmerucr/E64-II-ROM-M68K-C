@@ -197,16 +197,18 @@ void tty_timer_callback()
 void tty_add_bottom_line()
 {
 	u8 columns = tty_current->columns;
+	u16 total_tiles = tty_current->number_of_tiles;
+	u16 no_of_tiles_to_move = total_tiles - columns;
 
-	for (size_t i=0; i<((tty_current->number_of_tiles) - columns); i++) {
+	for (size_t i=0; i < no_of_tiles_to_move; i++) {
 		tty_current->screen_blit.tiles[i] =
 			tty_current->screen_blit.tiles[i + columns];
 		tty_current->screen_blit.tiles_color[i] =
-			tty_current->screen_blit.tiles_color[i + tty_current->columns];
+			tty_current->screen_blit.tiles_color[i + columns];
 		tty_current->screen_blit.tiles_background_color[i] =
-			tty_current->screen_blit.tiles_background_color[i + tty_current->columns];
+			tty_current->screen_blit.tiles_background_color[i + columns];
 	}
-	for (size_t i=tty_current->number_of_tiles - tty_current->columns; i<tty_current->number_of_tiles; i++)
+	for (size_t i=no_of_tiles_to_move; i<total_tiles; i++)
 		tty_current->screen_blit.tiles[i] = ' ';
 }
 
@@ -225,7 +227,13 @@ void tty_enter()
 		i--;
 	tty_current->command_buffer[i + 1] = 0;
 
-	tty_putchar('\n');
-	tty_puts(tty_current->command_buffer);
-	tty_puts("<<END>>\n");
+	// size_t i = tty_current->cursor_position -
+	// 	tty_current->cursor_position % tty_current->columns +
+	// 	tty_current->columns - 1;
+
+	// while (i % tty_current->columns) {
+
+	// }
+
+	tty_current->interpreter(tty_current->command_buffer);
 }

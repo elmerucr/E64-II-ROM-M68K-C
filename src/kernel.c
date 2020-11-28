@@ -2,10 +2,12 @@
 #include "vicv.h"
 #include "cia.h"
 
+/*
+ * Global vars and objects accessible from within kernel
+ */
 void *heap_start;
 void *heap_end;
 void *character_ram;
-
 struct tty tty0;
 
 int update_vector_number(u8 vector_no, void *exception_handler)

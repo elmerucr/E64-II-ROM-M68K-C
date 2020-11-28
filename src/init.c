@@ -40,6 +40,8 @@ void init()
 		0x0000
 	);
 
+	tty0.interpreter = &basic_interprete_line;
+
 	tty_clear();
 	tty_puts("E64-II Computer System\n\nready.\n");
 

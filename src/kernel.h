@@ -25,12 +25,6 @@ void kmain();
 u8 *memcpy(u8 *dest, const u8 *src, size_t count);
 u8 *memset(u8 *dest, u8 val, size_t count);
 
-extern void *heap_start;
-extern void *heap_end;
-extern void *character_ram;
-
-extern struct tty tty0;
-
 void *malloc(size_t chunk);
 
 void build_character_ram(u8 *source, u16 *dest);
@@ -42,5 +36,13 @@ void disable_interrupts();
 void restore_interrupts();
 
 void address_error_exception_handler();
+
+/*
+ * Global vars and objects accessible from within kernel
+ */
+extern void *heap_start;
+extern void *heap_end;
+extern void *character_ram;
+extern struct tty tty0;
 
 #endif

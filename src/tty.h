@@ -22,6 +22,8 @@ struct tty {
 	u16 current_background_color;
 
 	char	*command_buffer;
+
+	void	(*interpreter)(char *line);
 };
 
 void tty_set_current(struct tty *local);

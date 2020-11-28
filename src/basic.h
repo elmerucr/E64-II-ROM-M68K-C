@@ -14,8 +14,10 @@ struct basic_env {
 	void *end_of_vars;
 };
 
+extern struct basic_env basic;
+
 void basic_cold_start();
 void basic_warm_start();
-void basic_interprete(char *line);
+void basic_interprete_line(char *line);
 
 #endif
