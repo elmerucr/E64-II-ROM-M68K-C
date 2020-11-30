@@ -11,8 +11,8 @@ void command_init()
 void command_interprete_line(char *line)
 {
 	if (*line) {
-		tty_puts("\n");
-		tty_puts(line);
+		//tty_puts("\n");
+		//tty_puts(line);
 		tty_putchar('\n');
 		tty_putchar('>');
 	} else {

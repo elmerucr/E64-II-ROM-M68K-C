@@ -22,7 +22,7 @@ void init()
 	VICV->horizontal_border_size = 16;
 	VICV->horizontal_border_color = C64_BLACK;
 
-	BLITTER->clear_color = C64_DARKGREY;
+	BLITTER->clear_color = C64_BLUE;
 
 	CIA->keyboard_repeat_delay = 50;
 	CIA->keyboard_repeat_speed = 5;
@@ -34,7 +34,7 @@ void init()
 		BLIT_X__64_TILES | BLIT_Y__32_TILES,
 		0,
 		16,
-		C64_LIGHTGREY,
+		C64_LIGHTBLUE,
 		0x0000
 	);
 

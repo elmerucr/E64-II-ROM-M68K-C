@@ -55,6 +55,8 @@ void tty_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 	tty_current->cursor_blink = false;
 	tty_current->current_foreground_color = foreground_color;
 	tty_current->current_background_color = background_color;
+
+	tty_current->current_mode = SHELL;
 }
 
 void tty_clear()
@@ -66,6 +68,7 @@ void tty_clear()
 		tty_current->screen_blit.tiles_background_color[i] =
 			tty_current->screen_blit.background_color;
 	}
+	tty_current->cursor_position = 0;
 }
 
 void tty_putsymbol(char symbol)
@@ -147,17 +150,29 @@ void tty_cursor_right()
 
 void tty_cursor_up()
 {
-	tty_current->cursor_position -= tty_current->columns;
-	if (tty_current->cursor_position >= tty_current->number_of_tiles)
-		tty_current->cursor_position += tty_current->columns;
+	switch (tty_current->current_mode) {
+	case C64:
+		tty_current->cursor_position -= tty_current->columns;
+		if (tty_current->cursor_position >= tty_current->number_of_tiles)
+			tty_current->cursor_position += tty_current->columns;
+		break;
+	case SHELL:
+		break;
+	}
 }
 
 void tty_cursor_down()
 {
-	tty_current->cursor_position += tty_current->columns;
-	if (tty_current->cursor_position >= tty_current->number_of_tiles) {
-		tty_add_bottom_line();
-		tty_current->cursor_position -= tty_current->columns;
+	switch (tty_current->current_mode) {
+	case C64:
+		tty_current->cursor_position += tty_current->columns;
+		if (tty_current->cursor_position >= tty_current->number_of_tiles) {
+			tty_add_bottom_line();
+			tty_current->cursor_position -= tty_current->columns;
+		}
+		break;
+	case SHELL:
+		break;
 	}
 }
 

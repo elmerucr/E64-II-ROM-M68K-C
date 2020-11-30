@@ -5,6 +5,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+enum mode {
+	SHELL,
+	C64
+};
+
 struct tty {
 	struct blit screen_blit;
 	u8  columns;
@@ -22,6 +27,8 @@ struct tty {
 	u16 current_background_color;
 
 	char	*command_buffer;
+
+	enum mode current_mode;
 
 	void	(*interpreter)(char *line);
 };
