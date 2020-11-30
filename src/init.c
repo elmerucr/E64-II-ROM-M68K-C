@@ -5,7 +5,7 @@
 #include "tty.h"
 #include "timer.h"
 #include "cia.h"
-#include "basic.h"
+#include "command.h"
 
 void move_sections_from_rom_to_kernel_ram();
 void update_vector_table();
@@ -22,13 +22,11 @@ void init()
 	VICV->horizontal_border_size = 16;
 	VICV->horizontal_border_color = C64_BLACK;
 
-	BLITTER->clear_color = C64_BLUE;
+	BLITTER->clear_color = C64_DARKGREY;
 
 	CIA->keyboard_repeat_delay = 50;
 	CIA->keyboard_repeat_speed = 5;
 	CIA->control_register = 0b00000001;
-
-	basic_cold_start();
 
 	tty_set_current(&tty0);
 
@@ -36,14 +34,16 @@ void init()
 		BLIT_X__64_TILES | BLIT_Y__32_TILES,
 		0,
 		16,
-		C64_LIGHTBLUE,
+		C64_LIGHTGREY,
 		0x0000
 	);
 
-	tty0.interpreter = &basic_interprete_line;
-
 	tty_clear();
-	tty_puts("E64-II Computer System\n\nready.\n");
+	tty_puts("E64-II Virtual Computer System");
+
+	command_init();
+
+	tty0.interpreter = &command_interprete_line;
 
 	blitter_add_action(&tty0.screen_blit);
 

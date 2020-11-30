@@ -214,7 +214,6 @@ void tty_add_bottom_line()
 
 void tty_enter()
 {
-	// NEEDS WORK, INEFFICIENT AND CAN BE FASTER
 	u16 start_of_line = tty_current->cursor_position -
 		(tty_current->cursor_position % tty_current->columns);
 	for (size_t i = 0; i < tty_current->columns; i++) {
@@ -226,14 +225,6 @@ void tty_enter()
 	while (tty_current->command_buffer[i] == ' ')
 		i--;
 	tty_current->command_buffer[i + 1] = 0;
-
-	// size_t i = tty_current->cursor_position -
-	// 	tty_current->cursor_position % tty_current->columns +
-	// 	tty_current->columns - 1;
-
-	// while (i % tty_current->columns) {
-
-	// }
 
 	tty_current->interpreter(tty_current->command_buffer);
 }
