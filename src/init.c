@@ -39,7 +39,8 @@ void init()
 	);
 
 	tty_clear();
-	tty_puts("E64-II Virtual Computer System");
+	tty0.current_mode = SHELL;
+	tty_puts("E64-II Virtual Computer System\n");
 
 	command_init();
 

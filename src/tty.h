@@ -17,6 +17,9 @@ struct tty {
 	u16 number_of_tiles;
 
 	u16	cursor_position;
+	u16	cursor_start_of_command;
+	u16	cursor_end_of_command;
+
 	u8	cursor_interval;
 	u8	cursor_countdown;
 	char	cursor_original_char;
@@ -39,6 +42,7 @@ void tty_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 	      u16 foreground_color, u16 background_color);
 
 void tty_clear();
+void tty_reset_start_end_command();
 
 void tty_putsymbol(char symbol);
 void tty_putchar(char value);
