@@ -2,6 +2,8 @@
 #include "kernel.h"
 #include "cia.h"
 
+#define COMMAND_BUFFER_SIZE 256
+
 struct tty *tty_current;
 
 void tty_set_current(struct tty *local)
@@ -28,7 +30,7 @@ void tty_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 		(0b1 << ((size_in_tiles_log2 & 0b1110000) >> 4));
 
 	tty_current->command_buffer =
-		malloc(256 * sizeof(char));
+		malloc(COMMAND_BUFFER_SIZE * sizeof(char));
 
 	tty_current->number_of_tiles =
 		tty_current->columns *
@@ -193,24 +195,45 @@ void tty_backspace()
 {
 	u16 pos = tty_current->cursor_position;
 	u16 min_pos = 0;
-	if (tty_current->current_mode == SHELL)
+
+	if (tty_current->current_mode == SHELL) {
 		min_pos = tty_current->cursor_start_of_command;
-	if (pos > min_pos) {
-		tty_current->cursor_position--;
-		while (pos % tty_current->columns) {
-			tty_current->screen_blit.tiles[pos - 1] =
-				tty_current->screen_blit.tiles[pos];
-			tty_current->screen_blit.tiles_color[pos - 1] =
-				tty_current->screen_blit.tiles_color[pos];
-			tty_current->screen_blit.tiles_background_color[pos - 1] =
-				tty_current->screen_blit.tiles_background_color[pos];
-			pos++;
+		if (pos > min_pos) {
+			tty_current->cursor_position--;
+			tty_current->cursor_end_of_command--;
+			for (size_t i = tty_current->cursor_position;
+			     i<tty_current->cursor_end_of_command; i++) {
+				tty_current->screen_blit.tiles[i] =
+					tty_current->screen_blit.tiles[i+1];
+				tty_current->screen_blit.tiles_color[i] =
+					tty_current->screen_blit.tiles_color[i+1];
+				tty_current->screen_blit.tiles_background_color[i] =
+					tty_current->screen_blit.tiles_background_color[i+1];
+			}
+			tty_current->screen_blit.tiles[tty_current->cursor_end_of_command] = ' ';
+			tty_current->screen_blit.tiles_color[tty_current->cursor_end_of_command] =
+				tty_current->current_foreground_color;
+			tty_current->screen_blit.tiles_background_color[tty_current->cursor_end_of_command] =
+				tty_current->current_background_color;
 		}
-		tty_current->screen_blit.tiles[pos - 1] = ' ';
-		tty_current->screen_blit.tiles_color[pos - 1] =
-			tty_current->current_foreground_color;
-		tty_current->screen_blit.tiles_background_color[pos - 1] =
-			tty_current->current_background_color;
+	} else {
+		if (pos > min_pos) {
+			tty_current->cursor_position--;
+			while (pos % tty_current->columns) {
+				tty_current->screen_blit.tiles[pos - 1] =
+					tty_current->screen_blit.tiles[pos];
+				tty_current->screen_blit.tiles_color[pos - 1] =
+					tty_current->screen_blit.tiles_color[pos];
+				tty_current->screen_blit.tiles_background_color[pos - 1] =
+					tty_current->screen_blit.tiles_background_color[pos];
+				pos++;
+			}
+			tty_current->screen_blit.tiles[pos - 1] = ' ';
+			tty_current->screen_blit.tiles_color[pos - 1] =
+				tty_current->current_foreground_color;
+			tty_current->screen_blit.tiles_background_color[pos - 1] =
+				tty_current->current_background_color;
+		}
 	}
 }
 
