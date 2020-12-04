@@ -129,8 +129,9 @@ void kmain()
 				break;
 			default:
 				if (!tty_is_command_size_max()) {
-					tty_putchar(key_value);
 					tty_increase_command_size();
+					tty_insert();
+					tty_putchar(key_value);
 				}
 				break;
 			}

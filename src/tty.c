@@ -326,3 +326,18 @@ int tty_is_command_size_max()
 		tty_current->cursor_start_of_command;
 	return size == (COMMAND_BUFFER_SIZE - 1) ? 1 : 0;
 }
+
+void tty_insert()
+{
+	u16 old_cursor_position = tty_current->cursor_position;
+	for (u16 pos = tty_current->cursor_end_of_command;
+	     pos > old_cursor_position; pos--) {
+		tty_current->screen_blit.tiles[pos] =
+			tty_current->screen_blit.tiles[pos - 1];
+		tty_current->screen_blit.tiles_color[pos] =
+			tty_current->screen_blit.tiles_color[pos - 1];
+		tty_current->screen_blit.tiles_background_color[pos] =
+			tty_current->screen_blit.tiles_background_color[pos - 1];
+	}
+	tty_current->cursor_position = old_cursor_position;
+}
