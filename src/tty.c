@@ -2,7 +2,7 @@
 #include "kernel.h"
 #include "cia.h"
 
-#define COMMAND_BUFFER_SIZE 256
+#define COMMAND_BUFFER_SIZE 63+(1*64)
 
 struct tty *tty_current;
 
@@ -107,7 +107,6 @@ void tty_putchar(char value)
 		break;
 	default:
 		tty_putsymbol(value);
-		tty_current->cursor_end_of_command++;
 		break;
 	}
 }
@@ -268,7 +267,7 @@ void tty_add_bottom_line()
 	tty_current->cursor_end_of_command -= tty_current->columns;
 }
 
-void tty_enter()
+void tty_enter_command()
 {
 	switch (tty_current->current_mode) {
 	case C64:
@@ -295,6 +294,7 @@ void tty_enter()
 				tty_current->screen_blit.tiles[i];
 		}
 		tty_current->command_buffer[i - tty_current->cursor_start_of_command] = 0;
+		tty_current->cursor_position = tty_current->cursor_end_of_command;
 		}
 		break;
 	}
@@ -308,4 +308,21 @@ void tty_reset_start_end_command()
 		tty_current->cursor_position;
 	tty_current->cursor_end_of_command =
 		tty_current->cursor_position;
+}
+
+void tty_increase_command_size()
+{
+	tty_current->cursor_end_of_command++;
+}
+
+void tty_decrease_command_size()
+{
+	tty_current->cursor_end_of_command--;
+}
+
+int tty_is_command_size_max()
+{
+	u16 size = tty_current->cursor_end_of_command -
+		tty_current->cursor_start_of_command;
+	return size == (COMMAND_BUFFER_SIZE - 1) ? 1 : 0;
 }

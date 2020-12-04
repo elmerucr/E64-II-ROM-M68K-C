@@ -56,7 +56,11 @@ void tty_cursor_right();
 void tty_cursor_up();
 void tty_cursor_down();
 void tty_backspace();
-void tty_enter();
+void tty_enter_command();
+
+void tty_increase_command_size();
+void tty_decrease_command_size();
+int tty_is_command_size_max();
 
 void tty_add_bottom_line();
 

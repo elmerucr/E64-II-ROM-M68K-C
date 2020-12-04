@@ -125,10 +125,13 @@ void kmain()
 				tty_backspace();
 				break;
 			case ASCII_LF:
-				tty_enter();
+				tty_enter_command();
 				break;
 			default:
-				tty_putchar(key_value);
+				if (!tty_is_command_size_max()) {
+					tty_putchar(key_value);
+					tty_increase_command_size();
+				}
 				break;
 			}
 			tty_activate_cursor();
