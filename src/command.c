@@ -8,11 +8,23 @@ void command_init()
 	command_prompt();
 }
 
+// void command_interprete_line(char *line)
+// {
+// 	if (*line) {
+// 		tty_putchar('\n');
+// 		tty_puts(line);
+// 	}
+// 	command_prompt();
+// }
+
 void command_interprete_line(char *line)
 {
 	if (*line) {
-		tty_putchar('\n');
-		tty_puts(line);
+		while (*line) {
+			tty_putchar('\n');
+			tty_puts(line);
+			line++;
+		}
 	}
 	command_prompt();
 }

@@ -6,7 +6,7 @@
 
 _vicv_vblank_exception_handler:
 
-	movel	%a0,%sp@-
+	moveml	%a0-%a2/%d0-%d2,%sp@-	| save regs
 	moveb   #1,VICV_ISR		| acknowledge interrupt
 	moveb   #1,VICV_BUFFERSWAP
 	moveal  _blitter_list,%a0
@@ -14,5 +14,5 @@ _vicv_vblank_exception_handler:
 	beq     2f
 	moveb   #1,BLITTER_CONTROL
 	bra     1b
-2: 	movel   %sp@+,%a0
+2:	moveml   %sp@+,%a0-%a2/%d0-%d2	| restore regs
 	rte
