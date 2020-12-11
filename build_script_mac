@@ -1,0 +1,2 @@
+make clean
+make && cp rom.bin ~/.E64-II && open ~/Applications/E64-II.app
