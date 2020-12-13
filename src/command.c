@@ -13,7 +13,15 @@ void command_interprete_line(char *line)
 	char *token0 = command_strtok(line, " ");
 
 	if (token0) {
-		if (command_strcmp(token0, "clear") == 0) {
+		if (command_strcmp(token0, "about") == 0 ) {
+			tty_puts(
+				"\n\n"
+				"E64-II is a virtual computer system that runs on macOS and\n"
+				"linux. It's mainly inspired by the Commodore 64 but implements\n"
+				"significant parts of Amiga 500 and Atari ST\n"
+				"technology as well."
+			);
+		} else if (command_strcmp(token0, "clear") == 0) {
 			tty_clear();
 		} else if (command_strcmp(token0, "run") == 0) {
 		 	tty_putchar('\n');
