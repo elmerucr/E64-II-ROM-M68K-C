@@ -1,6 +1,7 @@
 #include "tty.h"
 #include "kernel.h"
 #include "cia.h"
+#include "stdarg.h"
 
 #define COMMAND_BUFFER_SIZE 63+(1*64)
 
@@ -117,6 +118,51 @@ void tty_puts(char *text)
 		tty_putchar(*text);
 		text++;
 	}
+}
+
+int tty_printf(const char *format, ...)
+{
+	va_list arguments;
+	size_t output = 0;
+	unsigned int u;
+
+	va_start(arguments, format);
+
+	while (*format) {
+		switch (*format) {
+		case '%':
+			format++;
+			switch (*format) {
+			case '%':
+				tty_putchar('%');
+				output++;
+				break;
+			case 'u':
+				u = va_arg(arguments, unsigned int);
+				output += printu(u);
+				break;
+			}
+			break;
+		default:
+			tty_putchar(*format);
+			output++;
+			break;
+		}
+		format++;
+	}
+
+	va_end(arguments);
+	return output;
+}
+
+int printu(unsigned int u)
+{
+	int output = 0;
+	while (0) {
+		int res = u / 10;
+		tty_putchar(64 + res);
+	}
+	return output;
 }
 
 void tty_activate_cursor()

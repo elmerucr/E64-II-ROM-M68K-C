@@ -47,6 +47,7 @@ void tty_reset_start_end_command();
 void tty_putsymbol(char symbol);
 void tty_putchar(char value);
 void tty_puts(char *text);
+int tty_printf(const char *format, ...);
 
 void tty_activate_cursor();
 void tty_deactivate_cursor();
@@ -66,5 +67,7 @@ int tty_is_command_size_max();
 void tty_add_bottom_line();
 
 void tty_timer_callback();
+
+int printu(unsigned int u);
 
 #endif

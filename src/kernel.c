@@ -33,7 +33,7 @@ int update_vector_number(u8 vector_no, void *exception_handler)
 	return 0;
 }
 
-u8 *memcpy(u8 *dest, const u8 *src, size_t count)
+void *memcpy(u8 *dest, const u8 *src, size_t count)
 {
 	for (u32 i=0; i<count; i++)
 		dest[i] = src[i];

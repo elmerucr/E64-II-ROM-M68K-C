@@ -22,7 +22,7 @@ void kmain();
 #define	PEEKW(A)	*(volatile u16 *)A
 #define	PEEKL(A)	*(volatile u32 *)A
 
-u8 *memcpy(u8 *dest, const u8 *src, size_t count);
+void *memcpy(u8 *dest, const u8 *src, size_t count);
 u8 *memset(u8 *dest, u8 val, size_t count);
 
 void *malloc(size_t chunk);
