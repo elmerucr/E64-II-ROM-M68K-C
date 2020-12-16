@@ -112,19 +112,22 @@ void tty_putchar(char value)
 	}
 }
 
-void tty_puts(char *text)
+int tty_puts(char *text)
 {
+	int char_count = 0;
 	while (*text) {
 		tty_putchar(*text);
+		char_count++;
 		text++;
 	}
+	return char_count;
 }
 
 int tty_printf(const char *format, ...)
 {
 	va_list arguments;
 	size_t output = 0;
-	unsigned int u;
+	char *i;
 
 	va_start(arguments, format);
 
@@ -137,9 +140,9 @@ int tty_printf(const char *format, ...)
 				tty_putchar('%');
 				output++;
 				break;
-			case 'u':
-				u = va_arg(arguments, unsigned int);
-				output += printu(u);
+			case 's':
+				i = va_arg(arguments, char *);
+				output += tty_puts(i);
 				break;
 			}
 			break;
@@ -150,19 +153,52 @@ int tty_printf(const char *format, ...)
 		}
 		format++;
 	}
-
 	va_end(arguments);
 	return output;
 }
 
-int printu(unsigned int u)
+void sprint_byte_hex(char *string,  u8 u)
 {
-	int output = 0;
-	while (0) {
-		int res = u / 10;
-		tty_putchar(64 + res);
+	string[2] = '\0';
+	static const char symbols[] = "0123456789abcdef";
+	int count = 2;
+	while (count--) {
+		string[count] = symbols[u % 16];
+		u = u / 16;
 	}
-	return output;
+}
+
+void sprint_word_hex(char *string, u16 u)
+{
+	string[4] = '\0';
+	static const char symbols[] = "0123456789abcdef";
+	int count = 4;
+	while (count--) {
+		string[count] = symbols[u % 16];
+		u = u / 16;
+	}
+}
+
+void sprint_address_hex(char *string, u32 u)
+{
+	string[6] = '\0';
+	static const char symbols[] = "0123456789abcdef";
+	int count = 6;
+	while (count--) {
+		string[count] = symbols[u % 16];
+		u = u / 16;
+	}
+}
+
+void sprint_long_hex(char *string, u32 u)
+{
+	string[8] = '\0';
+	static const char symbols[] = "0123456789abcdef";
+	int count = 8;
+	while (count--) {
+		string[count] = symbols[u % 16];
+		u = u / 16;
+	}
 }
 
 void tty_activate_cursor()

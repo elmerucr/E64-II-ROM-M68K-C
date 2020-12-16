@@ -1,6 +1,7 @@
 #include "command.h"
 #include "tty.h"
 #include "string.h"
+#include <stdbool.h>
 #include "mon.h"
 
 struct command_env command;
@@ -22,8 +23,15 @@ void command_interprete_line(char *line)
 				"linux. It's mainly inspired by the Commodore 64 but implements\n"
 				"significant parts of Amiga 500 and Atari ST technology as well.\n"
 			);
+			char p1[9];
+			sprint_long_hex(p1, 0xd021);
+			char p2[9];
+			sprint_long_hex(p2, 53248);
+			tty_printf("boe: $%s and 0x%s\n", p1, p2);
 		} else if (strcmp(token0, "clear") == 0) {
 			tty_clear();
+		} else if (strcmp(token0, "go") == 0) {
+			command_go();
 		} else if (strcmp(token0, "mon") == 0) {
 			tty0.current_mode = C64;
 			mon_init();
@@ -46,4 +54,58 @@ void command_prompt()
 {
 	tty_puts("\n>");
 	tty_reset_start_end_command();
+}
+
+void command_go()
+{
+	char *address_string = strtok(NULL, " ");
+	if (address_string) {
+		u32 address;
+		if (hex_string_to_int(address_string, &address)) {
+			address &= 0x00ffffff;
+			char interpret[7];
+			sprint_address_hex(interpret, address);
+			if (address & 0x1) {
+				tty_printf("\nerror: odd address $%s", interpret);
+			} else {
+				tty_printf("\njumping to user mode at $%s", interpret);
+			}
+		} else {
+			tty_printf("\nerror: '%s' is not a hex value", address_string);
+		}
+	} else {
+		tty_puts("\nerror: missing address");
+	}
+}
+
+bool hex_string_to_int(const char *temp_string, u32 *return_value)
+{
+    u32 val = 0;
+    while (*temp_string)
+    {
+        // get current character then increment
+        u8 byte = *temp_string++;
+        // transform hex character to the 4bit equivalent number, using the ascii table indexes
+        if (byte >= '0' && byte <= '9')
+        {
+            byte = byte - '0';
+        }
+        else if (byte >= 'a' && byte <='f')
+        {
+            byte = byte - 'a' + 10;
+        }
+        else if (byte >= 'A' && byte <='F')
+        {
+            byte = byte - 'A' + 10;
+        }
+        else
+        {
+            // we have a problem, return false and do not write the return value
+            return false;
+        }
+        // shift 4 to make space for new digit, and add the 4 bits of the new digit
+        val = (val << 4) | (byte & 0xf);
+    }
+    *return_value = val;
+    return true;
 }

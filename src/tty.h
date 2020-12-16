@@ -46,7 +46,7 @@ void tty_reset_start_end_command();
 
 void tty_putsymbol(char symbol);
 void tty_putchar(char value);
-void tty_puts(char *text);
+int tty_puts(char *text);
 int tty_printf(const char *format, ...);
 
 void tty_activate_cursor();
@@ -68,6 +68,9 @@ void tty_add_bottom_line();
 
 void tty_timer_callback();
 
-int printu(unsigned int u);
+void sprint_byte_hex(char *string, u8 u);
+void sprint_word_hex(char *string, u16 u);
+void sprint_address_hex(char *string, u32 u);
+void sprint_long_hex(char *string, u32 u);
 
 #endif
