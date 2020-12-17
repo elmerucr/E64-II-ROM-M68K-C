@@ -43,8 +43,8 @@ obj/%.o: %.c
 obj/%.o: %.S
 	$(CC) $(CFLAGS) $< -o $@
 
-mk_rom: tools/mk_rom.c
-	$(CCNATIVE) -o mk_rom tools/mk_rom.c
+mk_rom: tools/mk_rom.c tools/cbm_cp437_font.c
+	$(CCNATIVE) -o mk_rom tools/mk_rom.c tools/cbm_cp437_font.c
 
 clean:
 	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom $(OBJECTS)

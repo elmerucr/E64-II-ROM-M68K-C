@@ -23,11 +23,6 @@ void command_interprete_line(char *line)
 				"linux. It's mainly inspired by the Commodore 64 but implements\n"
 				"significant parts of Amiga 500 and Atari ST technology as well.\n"
 			);
-			char p1[9];
-			sprint_long_hex(p1, 0xd021);
-			char p2[9];
-			sprint_long_hex(p2, 53248);
-			tty_printf("boe: $%s and 0x%s\n", p1, p2);
 		} else if (strcmp(token0, "clear") == 0) {
 			tty_clear();
 		} else if (strcmp(token0, "go") == 0) {
@@ -65,7 +60,7 @@ void command_go()
 			address &= 0x00ffffff;
 			char interpret[7];
 			sprint_address_hex(interpret, address);
-			if (address & 0x1) {
+			if (address & 0b1) {
 				tty_printf("\nerror: odd address $%s", interpret);
 			} else {
 				tty_printf("\njumping to user mode at $%s", interpret);
