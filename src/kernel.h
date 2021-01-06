@@ -43,6 +43,7 @@ void address_error_exception_handler();
 extern void *heap_start;
 extern void *heap_end;
 extern void *character_ram;
+extern void *user_start;
 extern struct tty tty0;
 
 #endif

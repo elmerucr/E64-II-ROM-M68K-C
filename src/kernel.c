@@ -8,6 +8,7 @@
 void *heap_start;
 void *heap_end;
 void *character_ram;
+void *user_start;
 struct tty tty0;
 
 int update_vector_number(u8 vector_no, void *exception_handler)
@@ -22,14 +23,9 @@ int update_vector_number(u8 vector_no, void *exception_handler)
 	 * pointer by itself. Hence, the type is void **
 	 */
 	void **vector_address = (void *)((u32)vector_no << 2);
-
-
 	disable_interrupts();
-
 	*vector_address = exception_handler;
-
 	restore_interrupts();
-
 	return 0;
 }
 

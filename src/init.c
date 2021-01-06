@@ -15,6 +15,8 @@ void init()
 	move_sections_from_rom_to_kernel_ram();
 	update_vector_table();
 
+	user_start = (void *)INITIAL_SSP;
+
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
 	blitter_init();

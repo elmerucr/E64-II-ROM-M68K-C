@@ -6,7 +6,7 @@ VPATH = src
 OBJECTS =	obj/boot.o
 
 # order of other objects doesn't matter
-OBJECTS +=	obj/blitter.o obj/command.o obj/kernel.o obj/kernel_asm.o \
+OBJECTS +=	obj/blitter.o obj/command.o obj/fd.o obj/kernel.o obj/kernel_asm.o \
 		obj/init.o obj/mon.o obj/sids.o obj/string.o obj/timer.o \
 		obj/timer_asm.o obj/tty.o obj/vicv.o obj/vicv_asm.o
 
