@@ -38,8 +38,9 @@ void command_interprete_line(char *line)
 		} else if (strcmp(token0, "ver") == 0) {
 			tty_puts("\nversion information");
 		} else if (strcmp(token0, "read") == 0) {
-
-			read_sector(0x13, 0x8a00);
+			for (int i=0; i<2880; i++) {
+				read_sector(i, 0x8a00);
+			}
 		} else {
 			tty_puts("\nerror: unknown command '");
 			tty_puts(token0);
