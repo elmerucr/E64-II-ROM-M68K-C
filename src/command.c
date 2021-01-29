@@ -40,6 +40,7 @@ void command_interprete_line(char *line)
 		} else if (strcmp(token0, "read") == 0) {
 			for (int i=0; i<2880; i++) {
 				read_sector(i, 0x8a00);
+				read_sector(0x13,0x8a00);
 			}
 		} else {
 			tty_puts("\nerror: unknown command '");
@@ -80,32 +81,24 @@ void command_go()
 
 bool hex_string_to_int(const char *temp_string, u32 *return_value)
 {
-    u32 val = 0;
-    while (*temp_string)
-    {
-        // get current character then increment
-        u8 byte = *temp_string++;
-        // transform hex character to the 4bit equivalent number, using the ascii table indexes
-        if (byte >= '0' && byte <= '9')
-        {
-            byte = byte - '0';
-        }
-        else if (byte >= 'a' && byte <='f')
-        {
-            byte = byte - 'a' + 10;
-        }
-        else if (byte >= 'A' && byte <='F')
-        {
-            byte = byte - 'A' + 10;
-        }
-        else
-        {
-            // we have a problem, return false and do not write the return value
-            return false;
-        }
-        // shift 4 to make space for new digit, and add the 4 bits of the new digit
-        val = (val << 4) | (byte & 0xf);
-    }
-    *return_value = val;
-    return true;
+	u32 val = 0;
+	while (*temp_string) {
+        	// get current character then increment
+        	u8 byte = *temp_string++;
+        	// transform hex char to the 4bit equiv. number, using ascii table index
+        	if (byte >= '0' && byte <= '9') {
+        		byte = byte - '0';
+        	} else if (byte >= 'a' && byte <='f') {
+        		byte = byte - 'a' + 10;
+        	} else if (byte >= 'A' && byte <='F') {
+			byte = byte - 'A' + 10;
+		} else {
+			// problem, return false and do not write the return value
+			return false;
+        	}
+        	// shift 4 to make space for new digit, add 4 bits of the new digit
+        	val = (val << 4) | (byte & 0xf);
+	}
+	*return_value = val;
+	return true;
 }
