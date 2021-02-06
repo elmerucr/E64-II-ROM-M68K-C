@@ -1,6 +1,8 @@
 #include "blitter.h"
 #include "kernel.h"
 
+#include <stdlib.h>
+
 #define MAX_BLITS   256
 
 void **blitter_list;

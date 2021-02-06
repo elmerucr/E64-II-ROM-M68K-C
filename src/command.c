@@ -37,7 +37,7 @@ void command_interprete_line(char *line)
 		 	tty_puts("start program");
 		} else if (strcmp(token0, "ver") == 0) {
 			tty_puts("\nversion information");
-		} else if (strcmp(token0, "read") == 0) {
+		} else if (strcmp(token0, "dir") == 0) {
 			for (int i=0; i<2880; i++) {
 				read_sector(i, 0x8a00);
 				read_sector(0x13,0x8a00);

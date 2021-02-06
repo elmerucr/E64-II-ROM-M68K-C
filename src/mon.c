@@ -4,6 +4,11 @@
 void mon_init()
 {
 	mon_prompt();
+
+	volatile int *test = NULL;
+	test += 0xff;
+
+
 }
 
 void mon_prompt()
@@ -14,5 +19,7 @@ void mon_prompt()
 
 void mon_interprete_line(char *line)
 {
-	//
+	if (line) {
+		//
+	}
 }

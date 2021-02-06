@@ -35,5 +35,6 @@ struct __attribute__((packed)) fd {
 };
 
 enum fd_error_list read_sector(u32 sector, void *buffer);
+enum fd_error_list write_sector(u32 sector, void *buffer);
 
 #endif

@@ -3,6 +3,8 @@
 #include "cia.h"
 #include "stdarg.h"
 
+#include <stdlib.h>
+
 #define COMMAND_BUFFER_SIZE 63+(1*64)
 
 struct tty *tty_current;

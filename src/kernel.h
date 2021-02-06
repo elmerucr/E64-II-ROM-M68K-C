@@ -22,10 +22,8 @@ void kmain();
 #define	PEEKW(A)	*(volatile u16 *)A
 #define	PEEKL(A)	*(volatile u32 *)A
 
-void *memcpy(u8 *dest, const u8 *src, size_t count);
-u8 *memset(u8 *dest, u8 val, size_t count);
-
-void *malloc(size_t chunk);
+// void *memcpy(u8 *dest, const u8 *src, size_t count);
+// u8 *memset(u8 *dest, u8 val, size_t count);
 
 void build_character_ram(u8 *source, u16 *dest);
 int  update_vector_number(u8 vector_no, void *exception_handler);

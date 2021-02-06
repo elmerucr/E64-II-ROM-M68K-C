@@ -13,7 +13,7 @@ enum mode {
 struct tty {
 	struct blit screen_blit;
 	u8  columns;
-	u8  number_of_rows;
+	u16 number_of_rows;
 	u16 number_of_tiles;
 
 	u16	cursor_position;

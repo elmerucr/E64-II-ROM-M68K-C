@@ -7,12 +7,14 @@
 #include "cia.h"
 #include "command.h"
 
-void move_sections_from_rom_to_kernel_ram();
+#include <stdlib.h>
+
+void move_sections_rom_to_ram_set_heap();
 void update_vector_table();
 
 void init()
 {
-	move_sections_from_rom_to_kernel_ram();
+	move_sections_rom_to_ram_set_heap();
 	update_vector_table();
 
 	user_start = (void *)INITIAL_SSP;
@@ -64,7 +66,7 @@ void init()
 	kmain();
 }
 
-void move_sections_from_rom_to_kernel_ram()
+void move_sections_rom_to_ram_set_heap()
 {
 	/*
 	 * Move relevant portion of initialized data to ram.

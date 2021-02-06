@@ -10,6 +10,12 @@ OBJECTS +=	obj/blitter.o obj/command.o obj/fd.o obj/kernel.o obj/kernel_asm.o \
 		obj/init.o obj/mon.o obj/sids.o obj/string.o obj/timer.o \
 		obj/timer_asm.o obj/tty.o obj/vicv.o obj/vicv_asm.o
 
+# libc objects
+OBJECTS +=	obj/libc/malloc.o obj/libc/memcpy.o obj/libc/memset.o obj/libc/strlen.o
+
+# lox objects
+OBJECTS +=	obj/lox/test.o
+
 CC = $(TOOLCHAIN_PREFIX)gcc
 
 # -fleading-underscore makes it linkable under linux (or something to do with elf????)
@@ -21,7 +27,9 @@ CFLAGS =	-fleading-underscore \
 		-fomit-frame-pointer \
 		-Wall -Wextra -c -O2 \
 		-lgcc \
-		-ffreestanding
+		-ffreestanding \
+		-Isrc/libc \
+		-Isrc
 
 LD = $(TOOLCHAIN_PREFIX)ld
 

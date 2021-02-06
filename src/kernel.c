@@ -29,19 +29,19 @@ int update_vector_number(u8 vector_no, void *exception_handler)
 	return 0;
 }
 
-void *memcpy(u8 *dest, const u8 *src, size_t count)
-{
-	for (u32 i=0; i<count; i++)
-		dest[i] = src[i];
-	return dest;
-}
+// void *memcpy(u8 *dest, const u8 *src, size_t count)
+// {
+// 	for (u32 i=0; i<count; i++)
+// 		dest[i] = src[i];
+// 	return dest;
+// }
 
-u8 *memset(u8 *dest, u8 val, size_t count)
-{
-	for (u32 i=0; i<count; i++)
-		dest[i] = val;
-	return dest;
-}
+// u8 *memset(u8 *dest, u8 val, size_t count)
+// {
+// 	for (u32 i=0; i<count; i++)
+// 		dest[i] = val;
+// 	return dest;
+// }
 
 void build_character_ram(u8 *source, u16 *dest)
 {
@@ -83,17 +83,6 @@ void set_interrupt_priority_level(u16 value)
 		: "g"(value)    /* inputs  */
 		:               /* clobbered regs */
 	);
-}
-
-void *malloc(size_t n)
-{
-	void *old_heap_end = heap_end;
-
-	size_t final_n = (n & 0b1) ? n + 1 : n;
-
-	heap_end = (void *)((u32)heap_end + final_n);
-
-	return old_heap_end;
 }
 
 void kmain()
