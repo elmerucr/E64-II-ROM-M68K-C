@@ -3,9 +3,9 @@
 
 #define ROM_MAJOR	0
 #define ROM_MINOR	1
-#define	ROM_BUILD_DATE	20201212
+#define	ROM_BUILD_DATE	20210210
 
-#define INITIAL_SSP	0x00100000	// initial value of superv stackp
+#define INITIAL_SSP	0x00200000	// initial value of superv stackp
 
 #define VECTOR_000	0x00000000	// supervisor stackpointer
 #define VECTOR_001	0x00000004	// reset vector (init progr counter)

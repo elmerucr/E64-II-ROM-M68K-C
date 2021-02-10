@@ -5,4 +5,5 @@ rom.bin
 rom.cpp
 rom.map
 rom_unpatched.bin
+lox
 mk_rom

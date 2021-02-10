@@ -14,7 +14,7 @@ OBJECTS +=	obj/blitter.o obj/command.o obj/fd.o obj/kernel.o obj/kernel_asm.o \
 OBJECTS +=	obj/libc/malloc.o obj/libc/memcpy.o obj/libc/memset.o obj/libc/strlen.o
 
 # lox objects
-OBJECTS +=	obj/lox/test.o
+# OBJECTS +=	obj/lox/chunk.o obj/lox/lox.o obj/lox/memory.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc
 
@@ -37,7 +37,7 @@ LDFLAGS = -T rom.ld -Map=rom.map
 
 CCNATIVE = gcc
 
-all: rom.bin
+all: rom.bin lox
 
 rom.bin: rom_unpatched.bin mk_rom
 	./mk_rom
@@ -54,5 +54,8 @@ obj/%.o: %.S
 mk_rom: tools/mk_rom.c tools/cbm_cp437_font.c
 	$(CCNATIVE) -o mk_rom tools/mk_rom.c tools/cbm_cp437_font.c
 
+lox: src/lox/main.c src/lox/chunk.c src/lox/memory.c
+	$(CCNATIVE) -o lox src/lox/main.c src/lox/chunk.c src/lox/memory.c
+
 clean:
-	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom $(OBJECTS)
+	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom lox $(OBJECTS)
