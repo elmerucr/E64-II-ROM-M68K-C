@@ -11,7 +11,7 @@ OBJECTS +=	obj/blitter.o obj/command.o obj/fd.o obj/kernel.o obj/kernel_asm.o \
 		obj/timer_asm.o obj/tty.o obj/vicv.o obj/vicv_asm.o
 
 # libc objects
-OBJECTS +=	obj/libc/malloc.o obj/libc/memcpy.o obj/libc/memset.o obj/libc/strlen.o
+OBJECTS +=	obj/libc/allocation.o obj/libc/memcpy.o obj/libc/memset.o obj/libc/strlen.o
 
 # lox objects
 # OBJECTS +=	obj/lox/chunk.o obj/lox/lox.o obj/lox/memory.o

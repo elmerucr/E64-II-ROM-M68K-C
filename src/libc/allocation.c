@@ -1,6 +1,15 @@
 #include <stdlib.h>
-
+#include "allocation.h"
 #include "kernel.h"
+
+struct block *block_list;
+
+void allocation_init()
+{
+	block_list = heap_start;
+	block_list->size = 0;
+	block_list->next = NULL;
+}
 
 void *malloc(size_t size)
 {

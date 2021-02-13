@@ -6,6 +6,7 @@
 #include "timer.h"
 #include "cia.h"
 #include "command.h"
+#include "allocation.h"
 
 #include <stdlib.h>
 
@@ -18,6 +19,13 @@ void init()
 	update_vector_table();
 
 	user_start = (void *)INITIAL_SSP;
+
+	/*
+	 * Before we can call malloc(...) etd... we need to init the allocation
+	 * system.
+	 */
+	allocation_init();
+
 
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
