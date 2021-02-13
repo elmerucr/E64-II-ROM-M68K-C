@@ -10,5 +10,6 @@ struct block {
 };
 
 void allocation_init();
+void allocation_split(struct block *fitting_slot, size_t size);
 
 #endif

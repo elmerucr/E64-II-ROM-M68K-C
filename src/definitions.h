@@ -5,6 +5,7 @@
 #define ROM_MINOR	1
 #define	ROM_BUILD_DATE	20210210
 
+#define END_OF_HEAP	0x00180000	// this leaves 512k for supervisor stacksize
 #define INITIAL_SSP	0x00200000	// initial value of superv stackp
 
 #define VECTOR_000	0x00000000	// supervisor stackpointer

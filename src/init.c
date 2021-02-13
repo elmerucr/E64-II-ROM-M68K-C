@@ -26,7 +26,6 @@ void init()
 	 */
 	allocation_init();
 
-
 	character_ram = malloc(256 * 64 * sizeof(u16));
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
 	blitter_init();
@@ -97,11 +96,10 @@ void move_sections_rom_to_ram_set_heap()
 		*dst = 0x00;
 
 	/*
-	 * Initialize the heap pointers. heap_end points to the currently
-	 * available memory location.
+	 * Initialize the heap pointers
 	 */
 	heap_start = (void *)&bssend;
-	heap_end   = heap_start;
+	heap_end   = (void *)END_OF_HEAP;
 }
 
 void update_vector_table()
