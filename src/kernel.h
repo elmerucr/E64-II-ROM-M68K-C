@@ -10,7 +10,7 @@ typedef uint8_t  u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
 
-void kmain();
+void repl();
 
 // poke functionality
 #define	POKEB(A, B)	*(volatile u8  *)A = B
@@ -34,6 +34,8 @@ void disable_interrupts();
 void restore_interrupts();
 
 void address_error_exception_handler();
+
+void panic();
 
 /*
  * Global vars and objects accessible from within kernel

@@ -21,12 +21,15 @@ void init()
 	user_start = (void *)INITIAL_SSP;
 
 	/*
-	 * Before we can call malloc(...) etd... we need to init the allocation
+	 * Before malloc etc can be called, need to init the memory allocation
 	 * system.
 	 */
 	allocation_init();
 
 	character_ram = malloc(256 * 64 * sizeof(u16));
+	if (character_ram == 0)
+		panic();
+
 	build_character_ram((u8 *)CHAR_ROM, (u16 *)character_ram);
 	blitter_init();
 
@@ -50,12 +53,11 @@ void init()
 	);
 
 	tty_clear();
-	tty0.current_mode = SHELL;
 	tty_puts("E64-II Virtual Computer System\n");
 
-	command_init();
-
+	tty0.current_mode = SHELL;
 	tty0.interpreter = &command_interprete_line;
+	tty0.prompt = command_prompt();
 
 	blitter_add_action(&tty0.screen_blit);
 
@@ -70,7 +72,7 @@ void init()
 	sids_reset();
 	sids_welcome_sound();
 
-	kmain();
+	repl();
 }
 
 void move_sections_rom_to_ram_set_heap()

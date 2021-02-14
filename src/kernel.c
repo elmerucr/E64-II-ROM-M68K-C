@@ -85,42 +85,57 @@ void set_interrupt_priority_level(u16 value)
 	);
 }
 
-void kmain()
+void panic()
 {
-	tty_activate_cursor();
+	// NEEDS WORK
+}
 
-	for (;;) {
-		if (CIA->status_register) {
-			tty_deactivate_cursor();
-			u8 key_value = CIA->key_next_ascii;
-			switch (key_value) {
-			case ASCII_CURSOR_LEFT:
-				tty_cursor_left();
-				break;
-			case ASCII_CURSOR_RIGHT:
-				tty_cursor_right();
-				break;
-			case ASCII_CURSOR_UP:
-				tty_cursor_up();
-				break;
-			case ASCII_CURSOR_DOWN:
-				tty_cursor_down();
-				break;
-			case ASCII_BACKSPACE:
-				tty_backspace();
-				break;
-			case ASCII_LF:
-				tty_enter_command();
-				break;
-			default:
-				if (!tty_is_command_size_max()) {
-					tty_increase_command_size();
-					tty_insert();
-					tty_putchar(key_value);
-				}
-				break;
+static void process_keypress()
+{
+	u8 key_value = CIA->key_next_ascii;
+	switch (key_value) {
+		case ASCII_CURSOR_LEFT:
+			tty_cursor_left();
+			break;
+		case ASCII_CURSOR_RIGHT:
+			tty_cursor_right();
+			break;
+		case ASCII_CURSOR_UP:
+			tty_cursor_up();
+			break;
+		case ASCII_CURSOR_DOWN:
+			tty_cursor_down();
+			break;
+		case ASCII_BACKSPACE:
+			tty_backspace();
+			break;
+		case ASCII_LF:
+			tty_enter_command();
+			tty_prompt();
+			tty_reset_start_end_command();
+			break;
+		default:
+			if (!tty_is_command_size_max()) {
+				tty_increase_command_size();
+				tty_insert();
+				tty_putchar(key_value);
 			}
-			tty_activate_cursor();
+			break;
+	}
+}
+
+void repl()
+{
+	for (;;) {
+		tty_prompt();
+		tty_reset_start_end_command();
+		tty_activate_cursor();
+		for (;;) {
+			if (CIA->status_register) {
+				tty_deactivate_cursor();
+				process_keypress();
+				tty_activate_cursor();
+			}
 		}
 	}
 }

@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#define COMMAND_BUFFER_SIZE 63+(1*64)
+#define COMMAND_BUFFER_SIZE 63+(3*64)
 
 struct tty *tty_current;
 
@@ -60,6 +60,8 @@ void tty_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 	tty_current->cursor_blink = false;
 	tty_current->current_foreground_color = foreground_color;
 	tty_current->current_background_color = background_color;
+
+	tty_current->prompt = "\n.";	// default prompt when none is given
 }
 
 void tty_clear()
@@ -382,8 +384,14 @@ void tty_enter_command()
 		}
 		break;
 	}
-
 	tty_current->interpreter(tty_current->command_buffer);
+}
+
+void tty_prompt()
+{
+	// NEEDS WORK
+	// flexibility for different prompts
+	tty_puts(tty_current->prompt);
 }
 
 void tty_reset_start_end_command()

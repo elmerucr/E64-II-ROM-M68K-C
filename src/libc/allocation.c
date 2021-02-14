@@ -3,6 +3,11 @@
 #include "allocation.h"
 #include "kernel.h"
 
+/*
+ * Some ideas have been inspired by:
+ * http://tharikasblogs.blogspot.com/p/how-to-write-your-own-malloc-and-free.html
+ */
+
 struct block *block_list;
 
 void allocation_init()

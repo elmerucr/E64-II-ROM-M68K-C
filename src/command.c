@@ -4,13 +4,9 @@
 #include <stdbool.h>
 #include "mon.h"
 #include "fd.h"
+#include "lox/lox.h"
 
 struct command_env command;
-
-void command_init()
-{
-	command_prompt();
-}
 
 void command_interprete_line(char *line)
 {
@@ -28,10 +24,11 @@ void command_interprete_line(char *line)
 			tty_clear();
 		} else if (strcmp(token0, "go") == 0) {
 			command_go();
-		} else if (strcmp(token0, "mon") == 0) {
-			tty0.current_mode = C64;
-			mon_init();
-			tty0.interpreter = &mon_interprete_line;
+		} else if (strcmp(token0, "lox") == 0) {
+			tty0.current_mode = SHELL;
+			tty0.prompt = lox_prompt();
+			lox_init();
+			tty0.interpreter = &lox_interprete_line;
 		} else if (strcmp(token0, "run") == 0) {
 		 	tty_putchar('\n');
 		 	tty_puts("start program");
@@ -40,6 +37,7 @@ void command_interprete_line(char *line)
 		} else if (strcmp(token0, "dir") == 0) {
 			for (int i=0; i<2880; i++) {
 				// NEEDS WORK
+				// temp hack
 				read_sector(i, 0x8a38);
 				read_sector(0x13,0x8a38);
 			}
@@ -49,13 +47,11 @@ void command_interprete_line(char *line)
 			tty_putchar('\'');
 		}
 	}
-	command_prompt();
 }
 
-void command_prompt()
+char *command_prompt()
 {
-	tty_puts("\n>");
-	tty_reset_start_end_command();
+	return "\n>";
 }
 
 void command_go()

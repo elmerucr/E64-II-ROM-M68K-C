@@ -30,6 +30,7 @@ struct tty {
 	u16 current_background_color;
 
 	char	*command_buffer;
+	char	*prompt;
 
 	enum mode current_mode;
 
@@ -42,6 +43,7 @@ void tty_init(u8 size_in_tiles_log2, u16 x_pos, u16 y_pos,
 	      u16 foreground_color, u16 background_color);
 
 void tty_clear();
+void tty_prompt();
 void tty_reset_start_end_command();
 
 void tty_putsymbol(char symbol);
