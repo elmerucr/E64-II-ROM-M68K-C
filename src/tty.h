@@ -48,7 +48,7 @@ void tty_reset_start_end_command();
 
 void tty_putsymbol(char symbol);
 void tty_putchar(char value);
-int tty_puts(char *text);
+int tty_puts(const char *text);
 int tty_printf(const char *format, ...);
 
 void tty_activate_cursor();

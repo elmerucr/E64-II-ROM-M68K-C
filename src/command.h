@@ -9,7 +9,7 @@ struct command_env {
 
 extern struct command_env command;
 
-void command_interprete_line(char *line);
+void command_interprete(char *line);
 char *command_prompt();
 
 void command_go();

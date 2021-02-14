@@ -116,7 +116,7 @@ void tty_putchar(char value)
 	}
 }
 
-int tty_puts(char *text)
+int tty_puts(const char *text)
 {
 	int char_count = 0;
 	while (*text) {

@@ -8,7 +8,7 @@
 
 struct command_env command;
 
-void command_interprete_line(char *line)
+void command_interprete(char *line)
 {
 	char *token0 = strtok(line, " ");
 
@@ -28,7 +28,7 @@ void command_interprete_line(char *line)
 			tty0.current_mode = SHELL;
 			tty0.prompt = lox_prompt();
 			lox_init();
-			tty0.interpreter = &lox_interprete_line;
+			tty0.interpreter = &lox_interprete;
 		} else if (strcmp(token0, "run") == 0) {
 		 	tty_putchar('\n');
 		 	tty_puts("start program");

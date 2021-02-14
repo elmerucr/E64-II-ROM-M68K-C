@@ -56,7 +56,7 @@ void init()
 	tty_puts("E64-II Virtual Computer System\n");
 
 	tty0.current_mode = SHELL;
-	tty0.interpreter = &command_interprete_line;
+	tty0.interpreter = &command_interprete;
 	tty0.prompt = command_prompt();
 
 	blitter_add_action(&tty0.screen_blit);
