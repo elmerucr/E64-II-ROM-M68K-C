@@ -1,7 +1,7 @@
+#include <string.h>
+#include <stdbool.h>
 #include "command.h"
 #include "tty.h"
-#include "string.h"
-#include <stdbool.h>
 #include "mon.h"
 #include "fd.h"
 #include "lox/lox.h"

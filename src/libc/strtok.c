@@ -1,11 +1,11 @@
-#include "string.h"
+#include <string.h>
 #include <stdbool.h>
 #include <stddef.h>
 
 /*
  * https://gist.github.com/sushlala/3172c37f2947e96977b6a0682ec55a60
  */
-bool is_delim(char c, char *delim)
+static bool is_delim(char c, char *delim)
 {
 	while (*delim != '\0') {
 		if (c == *delim)
@@ -56,14 +56,4 @@ char *strtok(char *s, char *delim) {
 		}
 		s++;
 	}
-}
-
-/*
- * https://stackoverflow.com/questions/20004458/optimized-strcmp-implementation
- */
-int strcmp(const char * str1, const char * str2)
-{
-	while (*str1 && (*str1 == *str2))
-		str1++, str2++;
-	return *(const unsigned char*)str1 - *(const unsigned char*)str2;
 }

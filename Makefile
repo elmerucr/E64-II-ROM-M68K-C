@@ -7,12 +7,13 @@ OBJECTS =	obj/boot.o
 
 # order of other objects doesn't matter
 OBJECTS +=	obj/blitter.o obj/command.o obj/fd.o obj/kernel.o obj/kernel_asm.o \
-		obj/init.o obj/mon.o obj/sids.o obj/string.o obj/timer.o \
+		obj/init.o obj/mon.o obj/sids.o obj/timer.o \
 		obj/timer_asm.o obj/tty.o obj/vicv.o obj/vicv_asm.o
 
 # libc objects
 OBJECTS +=	obj/libc/allocation.o obj/libc/exit.o obj/libc/memcpy.o \
-		obj/libc/memset.o obj/libc/printf.o obj/libc/strlen.o
+		obj/libc/memset.o obj/libc/printf.o obj/libc/putchar.o obj/libc/puts.o obj/libc/strlen.o \
+		obj/libc/strchr.o obj/libc/strcmp.o obj/libc/strtok.o
 
 # lox objects
 OBJECTS +=	obj/lox/chunk.o obj/lox/debug.o obj/lox/lox.o obj/lox/memory.o
