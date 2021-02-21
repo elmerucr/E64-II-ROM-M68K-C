@@ -1,11 +1,11 @@
 OUTPUT_FORMAT(binary)
 
-rom_start     = 0x00fc0000 ;
+kernel_start     = 0x00fc0000 ;
 kernel_ram_start = 0x00000400 ;
 
 SECTIONS
 {
-	. = rom_start ;
+	. = kernel_start ;
 
     .text :
     {

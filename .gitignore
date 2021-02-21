@@ -1,8 +1,8 @@
 .DS_Store
 .vscode/
 *.o
-rom.bin
-rom.cpp
-rom.map
-rom_unpatched.bin
-mk_rom
+kernel.bin
+kernel.cpp
+kernel.map
+kernel_unpatched.bin
+mk_kernel

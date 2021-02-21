@@ -35,17 +35,17 @@ CFLAGS =	-fleading-underscore \
 
 LD = $(TOOLCHAIN_PREFIX)ld
 
-LDFLAGS = -T rom.ld -Map=rom.map
+LDFLAGS = -T kernel.ld -Map=kernel.map
 
 CCNATIVE = gcc
 
-all: rom.bin lox
+all: kernel.bin
 
-rom.bin: rom_unpatched.bin mk_rom
-	./mk_rom
+kernel.bin: kernel_unpatched.bin mk_kernel
+	./mk_kernel
 
-rom_unpatched.bin: $(OBJECTS) rom.ld
-	$(LD) $(LDFLAGS) $(OBJECTS) -o rom_unpatched.bin
+kernel_unpatched.bin: $(OBJECTS) kernel.ld
+	$(LD) $(LDFLAGS) $(OBJECTS) -o kernel_unpatched.bin
 
 obj/%.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
@@ -53,11 +53,11 @@ obj/%.o: %.c
 obj/%.o: %.S
 	$(CC) $(CFLAGS) $< -o $@
 
-mk_rom: tools/mk_rom.c tools/cbm_cp437_font.c
-	$(CCNATIVE) -o mk_rom tools/mk_rom.c tools/cbm_cp437_font.c
+mk_kernel: tools/mk_kernel.c tools/cbm_cp437_font.c
+	$(CCNATIVE) -o mk_kernel tools/mk_kernel.c tools/cbm_cp437_font.c
 
 #lox: src/lox/main.c src/lox/chunk.c src/lox/memory.c
 # 	$(CCNATIVE) -o lox src/lox/main.c src/lox/chunk.c src/lox/memory.c
 
 clean:
-	rm rom.cpp rom.bin rom_unpatched.bin rom.map mk_rom $(OBJECTS)
+	rm kernel.cpp kernel.bin kernel_unpatched.bin kernel.map mk_kernel $(OBJECTS)
