@@ -108,7 +108,7 @@
 #define C64_LIGHTBLUE	0xf67d
 #define C64_LIGHTGREY	0xfaaa
 
-#define CHAR_ROM        0xfff000
+#define CHAR_ROM        0xfb8000
 
 // ascii definitions
 #define	ASCII_NULL		0x00

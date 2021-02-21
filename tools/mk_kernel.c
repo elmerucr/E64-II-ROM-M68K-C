@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 
-extern uint8_t cbm_cp437_font[];
-
 int main(int argc, char *argv[]) {
 	time_t t;
 	time(&t);
@@ -18,8 +16,7 @@ int main(int argc, char *argv[]) {
 	long pos = ftell(f);
 
 	printf("[mk_kernel] kernel_unpatched.bin size: %lu bytes\n", pos);
-	if( pos >= (262144L-4096L) )
-	{
+	if (pos >= 262144L) {
 		printf("[mk_kernel] too large, exiting...\n");
 		fclose(f);
 		return 1;
@@ -33,10 +30,6 @@ int main(int argc, char *argv[]) {
 	// fill up the rest of the final rom with zeroes
 	for (int i=pos; i < 262144L; i++)
 		kerneldata[i] = 0x00;
-
-	// copy font to the right location
-	for (int i=0; i<2048; i++)
-		kerneldata[0x3f000 + i] = cbm_cp437_font[i];
 
 	// close original unpatched bin file
 	fclose(f);

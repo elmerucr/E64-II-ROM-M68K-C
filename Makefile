@@ -53,8 +53,8 @@ obj/%.o: %.c
 obj/%.o: %.S
 	$(CC) $(CFLAGS) $< -o $@
 
-mk_kernel: tools/mk_kernel.c tools/cbm_cp437_font.c
-	$(CCNATIVE) -o mk_kernel tools/mk_kernel.c tools/cbm_cp437_font.c
+mk_kernel: tools/mk_kernel.c
+	$(CCNATIVE) -o mk_kernel tools/mk_kernel.c
 
 #lox: src/lox/main.c src/lox/chunk.c src/lox/memory.c
 # 	$(CCNATIVE) -o lox src/lox/main.c src/lox/chunk.c src/lox/memory.c
