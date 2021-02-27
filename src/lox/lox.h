@@ -1,6 +1,7 @@
 #ifndef LOX_H
 #define LOX_H
 
+#include "common.h"
 #include "chunk.h"
 #include "debug.h"
 

@@ -16,7 +16,7 @@ OBJECTS +=	obj/libc/allocation.o obj/libc/exit.o obj/libc/memcpy.o \
 		obj/libc/strchr.o obj/libc/strcmp.o obj/libc/strtok.o
 
 # lox objects
-OBJECTS +=	obj/lox/chunk.o obj/lox/debug.o obj/lox/lox.o obj/lox/memory.o
+OBJECTS +=	obj/lox/chunk.o obj/lox/debug.o obj/lox/lox.o obj/lox/memory.o obj/lox/value.o
 
 CC = $(TOOLCHAIN_PREFIX)gcc
 

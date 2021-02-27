@@ -1,7 +1,6 @@
 #include "tty.h"
 #include "kernel.h"
 #include "cia.h"
-#include "stdarg.h"
 
 #include <stdlib.h>
 
@@ -125,40 +124,6 @@ int tty_puts(const char *text)
 		text++;
 	}
 	return char_count;
-}
-
-int tty_printf(const char *format, ...)
-{
-	va_list arguments;
-	size_t output = 0;
-	char *i;
-
-	va_start(arguments, format);
-
-	while (*format) {
-		switch (*format) {
-		case '%':
-			format++;
-			switch (*format) {
-			case '%':
-				tty_putchar('%');
-				output++;
-				break;
-			case 's':
-				i = va_arg(arguments, char *);
-				output += tty_puts(i);
-				break;
-			}
-			break;
-		default:
-			tty_putchar(*format);
-			output++;
-			break;
-		}
-		format++;
-	}
-	va_end(arguments);
-	return output;
 }
 
 void sprint_byte_hex(char *string,  u8 u)

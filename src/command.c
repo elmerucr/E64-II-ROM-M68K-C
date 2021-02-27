@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "command.h"
 #include "tty.h"
 #include "mon.h"
@@ -64,12 +65,12 @@ void command_go()
 			char interpret[7];
 			sprint_address_hex(interpret, address);
 			if (address & 0b1) {
-				tty_printf("\nerror: odd address $%s", interpret);
+				printf("\nerror: odd address $%s", interpret);
 			} else {
-				tty_printf("\njumping to user mode at $%s", interpret);
+				printf("\njumping to user mode at $%s", interpret);
 			}
 		} else {
-			tty_printf("\nerror: '%s' is not a hex value", address_string);
+			printf("\nerror: '%s' is not a hex value", address_string);
 		}
 	} else {
 		tty_puts("\nerror: missing address");
